@@ -3,6 +3,6 @@
 
 ## 도커 컴포즈를 통한 실행
 ```bash
-$> git clone https://github.com/psyoblade/data-engineer-training.git && cd data-engineer-training
-$> docker-compose up -d
+$ git clone https://github.com/psyoblade/data-engineer-training.git && cd data-engineer-training
+$ docker-compose up -d
 ```
