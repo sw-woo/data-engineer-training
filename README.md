@@ -16,3 +16,5 @@ $ docker-compose up -d
 $ docker-compose logs notebook
 ```
 
+## 스파크 예제 실습
+* [스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-stream-1.html)
