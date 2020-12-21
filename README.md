@@ -28,4 +28,4 @@ $ docker-compose logs notebook
   - [1. 스파크 델타 레이크 기본](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-delta-1.html)
   - [2. 스파크 델타 레이크 실습](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-delta-2.html)
 * 스파크 스트리밍 실습
-  - [1. 스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/spark/notebooks/html/pyspark-stream-1.html)
+  - [1. 스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-stream-1.html)
