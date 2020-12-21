@@ -17,4 +17,15 @@ $ docker-compose logs notebook
 ```
 
 ## 스파크 예제 실습
-* [스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-stream-1.html)
+* 1. 스파크 기본 명령어 실습
+  - [1. 스파크 기본 명령어 이해](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-1.html)
+  - [2. 기본 연산 다루기](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-2.html)
+  - [3. 데이터 타입 다루기](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-3.html)
+  - [4. 조인 연산 다루기](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-4.html)
+  - [5. 집계 연산 다루기](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-5.html)
+  - [6. 스파크 JDBC to MySQL](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-basic-6.html)
+* 2. 스파크 델타 레이크 실습
+  - [1. 스파크 델타 레이크 기본](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-delta-1.html)
+  - [2. 스파크 델타 레이크 실습](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/notebooks/html/pyspark-delta-2.html)
+* 3. 스파크 스트리밍 실습
+  - [1. 스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-stream-1.html)
