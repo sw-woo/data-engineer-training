@@ -1,4 +1,6 @@
 # Custom ignore
+_committed_*
+_started_*
 tmp/
 source/
 target/
