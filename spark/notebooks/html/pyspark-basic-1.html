@@ -14337,25 +14337,20 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="3&#51068;&#52264;-1&#44368;&#49884;-&#49828;&#54028;&#53356;-&#44592;&#48376;-&#47749;&#47161;&#50612;-&#51060;&#54644;">3&#51068;&#52264; 1&#44368;&#49884; &#49828;&#54028;&#53356; &#44592;&#48376; &#47749;&#47161;&#50612; &#51060;&#54644;<a class="anchor-link" href="#3&#51068;&#52264;-1&#44368;&#49884;-&#49828;&#54028;&#53356;-&#44592;&#48376;-&#47749;&#47161;&#50612;-&#51060;&#54644;">&#182;</a></h1><h3 id="&#47785;&#52264;">&#47785;&#52264;<a class="anchor-link" href="#&#47785;&#52264;">&#182;</a></h3><ul>
+<h1 id="3&#51068;&#52264;-1&#44368;&#49884;-&#49828;&#54028;&#53356;-&#44592;&#48376;-&#47749;&#47161;&#50612;-&#51060;&#54644;">3&#51068;&#52264; 1&#44368;&#49884; &#49828;&#54028;&#53356; &#44592;&#48376; &#47749;&#47161;&#50612; &#51060;&#54644;<a class="anchor-link" href="#3&#51068;&#52264;-1&#44368;&#49884;-&#49828;&#54028;&#53356;-&#44592;&#48376;-&#47749;&#47161;&#50612;-&#51060;&#54644;">&#182;</a></h1><blockquote><p>스파크의 기본 명령어와 구조에 대해 이해합니다</p>
+</blockquote>
+<h2 id="&#47785;&#52264;">&#47785;&#52264;<a class="anchor-link" href="#&#47785;&#52264;">&#182;</a></h2><ul>
+<li><a href="#1.-스파크를-통한-CSV-파일-읽기">1. 스파크를 통한 CSV 파일 읽기</a></li>
+<li><a href="#2.-스파크의-2가지-프로그래밍-방식-비교">2. 스파크의 2가지 프로그래밍 방식 비교</a></li>
+<li><a href="#3.-스파크를-통한-JSON-파일-읽기">3. 스파크를 통한 JSON 파일 읽기</a></li>
+<li><a href="#4.-뷰-테이블-생성-및-조회">4. 뷰 테이블 생성 및 조회</a></li>
+<li><a href="#5.-스파크-애플리케이션의-개념-이해">5. 스파크 애플리케이션의 개념 이해</a></li>
+<li><a href="#6.-스파크-UI">6. 스파크 UI</a></li>
+<li><a href="#7.-M&amp;M-초콜렛-분류-예제">7. M&amp;M 초콜렛 분류 예제</a></li>
+<li><a href="#8.-실습문제">8. 실습문제</a></li>
+<li><a href="#9.-질문과-답변">9. 질문과 답변</a></li>
 <li><ol>
-<li>스파크 세션 및 데이터 프레임 생성</li>
-</ol>
-</li>
-<li><ol>
-<li>타입이 없는 데이터 란?</li>
-</ol>
-</li>
-<li><ol>
-<li>구조화된 API 란?</li>
-</ol>
-</li>
-<li><ol>
-<li>SparkSQL, Dataframe 그리고 Dataset 차이점</li>
-</ol>
-</li>
-<li><ol>
-<li>참고 자료</li>
+<li>레퍼런스</li>
 </ol>
 <ul>
 <li><a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark Programming Guide</a></li>
@@ -14375,16 +14370,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
-    <span class="o">.</span><span class="n">builder</span> \
-    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.session.timeZone&quot;</span><span class="p">,</span> <span class="s2">&quot;Asia/Seoul&quot;</span><span class="p">)</span> \
-    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="p">(</span><span class="n">SparkSession</span>
+    <span class="o">.</span><span class="n">builder</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.session.timeZone&quot;</span><span class="p">,</span> <span class="s2">&quot;Asia/Seoul&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">())</span>
 </pre></div>
 
      </div>
@@ -14395,12 +14390,13 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># !which python</span>
 <span class="o">!</span>/opt/conda/bin/python --version
 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;spark.version: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">spark</span><span class="o">.</span><span class="n">version</span><span class="p">)))</span>
 <span class="n">spark</span>
 </pre></div>
 
@@ -14422,6 +14418,7 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Python 3.8.6
+spark.version: 3.0.1
 </pre>
 </div>
 </div>
@@ -14429,7 +14426,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
 
 
 
@@ -14441,7 +14438,7 @@ a.anchor-link {
         <div>
             <p><b>SparkContext</b></p>
 
-            <p><a href="http://77718dbf54a2:4040">Spark UI</a></p>
+            <p><a href="http://fa3b1cf91690:4040">Spark UI</a></p>
 
             <dl>
               <dt>Version</dt>
@@ -14463,6 +14460,2252 @@ a.anchor-link {
 
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">strings</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;../requirements.txt&quot;</span><span class="p">)</span>
+<span class="n">strings</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;count of word is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+<span class="n">strings</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------+
+|value   |
++--------+
+|boto3   |
+|scrapy  |
+|selenium|
+|mrjob   |
+|pyspark |
++--------+
+only showing top 5 rows
+
+count of word is 9
+root
+ |-- value: string (nullable = true)
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.dataframe</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.column</span> <span class="kn">import</span> <span class="n">Column</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="o">==</span> <span class="n">DataFrame</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="n">Column</span><span class="p">)</span> <span class="c1"># 현재 strings 데이터프레임의 스키마에 value 라는 하나의 컬럼만 존재합니다</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="c1"># 데이터프레임은 Structured API 를 통해 Row 타입의 레코드를 다루는 함수를 이용하고</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Help on DataFrame in module pyspark.sql.dataframe object:
+
+class DataFrame(pyspark.sql.pandas.map_ops.PandasMapOpsMixin, pyspark.sql.pandas.conversion.PandasConversionMixin)
+ |  DataFrame(jdf, sql_ctx)
+ |  
+ |  A distributed collection of data grouped into named columns.
+ |  
+ |  A :class:`DataFrame` is equivalent to a relational table in Spark SQL,
+ |  and can be created using various functions in :class:`SparkSession`::
+ |  
+ |      people = spark.read.parquet(&#34;...&#34;)
+ |  
+ |  Once created, it can be manipulated using the various domain-specific-language
+ |  (DSL) functions defined in: :class:`DataFrame`, :class:`Column`.
+ |  
+ |  To select a column from the :class:`DataFrame`, use the apply method::
+ |  
+ |      ageCol = people.age
+ |  
+ |  A more concrete example::
+ |  
+ |      # To create DataFrame using SparkSession
+ |      people = spark.read.parquet(&#34;...&#34;)
+ |      department = spark.read.parquet(&#34;...&#34;)
+ |  
+ |      people.filter(people.age &gt; 30).join(department, people.deptId == department.id) \
+ |        .groupBy(department.name, &#34;gender&#34;).agg({&#34;salary&#34;: &#34;avg&#34;, &#34;age&#34;: &#34;max&#34;})
+ |  
+ |  .. versionadded:: 1.3
+ |  
+ |  Method resolution order:
+ |      DataFrame
+ |      pyspark.sql.pandas.map_ops.PandasMapOpsMixin
+ |      pyspark.sql.pandas.conversion.PandasConversionMixin
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __getattr__(self, name)
+ |      Returns the :class:`Column` denoted by ``name``.
+ |      
+ |      &gt;&gt;&gt; df.select(df.age).collect()
+ |      [Row(age=2), Row(age=5)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  __getitem__(self, item)
+ |      Returns the column as a :class:`Column`.
+ |      
+ |      &gt;&gt;&gt; df.select(df[&#39;age&#39;]).collect()
+ |      [Row(age=2), Row(age=5)]
+ |      &gt;&gt;&gt; df[ [&#34;name&#34;, &#34;age&#34;]].collect()
+ |      [Row(name=&#39;Alice&#39;, age=2), Row(name=&#39;Bob&#39;, age=5)]
+ |      &gt;&gt;&gt; df[ df.age &gt; 3 ].collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df[df[0] &gt; 3].collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  __init__(self, jdf, sql_ctx)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |  
+ |  __repr__(self)
+ |      Return repr(self).
+ |  
+ |  agg(self, *exprs)
+ |      Aggregate on the entire :class:`DataFrame` without groups
+ |      (shorthand for ``df.groupBy.agg()``).
+ |      
+ |      &gt;&gt;&gt; df.agg({&#34;age&#34;: &#34;max&#34;}).collect()
+ |      [Row(max(age)=5)]
+ |      &gt;&gt;&gt; from pyspark.sql import functions as F
+ |      &gt;&gt;&gt; df.agg(F.min(df.age)).collect()
+ |      [Row(min(age)=2)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  alias(self, alias)
+ |      Returns a new :class:`DataFrame` with an alias set.
+ |      
+ |      :param alias: string, an alias name to be set for the :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql.functions import *
+ |      &gt;&gt;&gt; df_as1 = df.alias(&#34;df_as1&#34;)
+ |      &gt;&gt;&gt; df_as2 = df.alias(&#34;df_as2&#34;)
+ |      &gt;&gt;&gt; joined_df = df_as1.join(df_as2, col(&#34;df_as1.name&#34;) == col(&#34;df_as2.name&#34;), &#39;inner&#39;)
+ |      &gt;&gt;&gt; joined_df.select(&#34;df_as1.name&#34;, &#34;df_as2.name&#34;, &#34;df_as2.age&#34;)                 .sort(desc(&#34;df_as1.name&#34;)).collect()
+ |      [Row(name=&#39;Bob&#39;, name=&#39;Bob&#39;, age=5), Row(name=&#39;Alice&#39;, name=&#39;Alice&#39;, age=2)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  approxQuantile(self, col, probabilities, relativeError)
+ |      Calculates the approximate quantiles of numerical columns of a
+ |      :class:`DataFrame`.
+ |      
+ |      The result of this algorithm has the following deterministic bound:
+ |      If the :class:`DataFrame` has N elements and if we request the quantile at
+ |      probability `p` up to error `err`, then the algorithm will return
+ |      a sample `x` from the :class:`DataFrame` so that the *exact* rank of `x` is
+ |      close to (p * N). More precisely,
+ |      
+ |        floor((p - err) * N) &lt;= rank(x) &lt;= ceil((p + err) * N).
+ |      
+ |      This method implements a variation of the Greenwald-Khanna
+ |      algorithm (with some speed optimizations). The algorithm was first
+ |      present in [[https://doi.org/10.1145/375663.375670
+ |      Space-efficient Online Computation of Quantile Summaries]]
+ |      by Greenwald and Khanna.
+ |      
+ |      Note that null values will be ignored in numerical columns before calculation.
+ |      For columns only containing null values, an empty list is returned.
+ |      
+ |      :param col: str, list.
+ |        Can be a single column name, or a list of names for multiple columns.
+ |      :param probabilities: a list of quantile probabilities
+ |        Each number must belong to [0, 1].
+ |        For example 0 is the minimum, 0.5 is the median, 1 is the maximum.
+ |      :param relativeError:  The relative target precision to achieve
+ |        (&gt;= 0). If set to zero, the exact quantiles are computed, which
+ |        could be very expensive. Note that values greater than 1 are
+ |        accepted but give the same result as 1.
+ |      :return:  the approximate quantiles at the given probabilities. If
+ |        the input `col` is a string, the output is a list of floats. If the
+ |        input `col` is a list or tuple of strings, the output is also a
+ |        list, but each element in it is a list of floats, i.e., the output
+ |        is a list of list of floats.
+ |      
+ |      .. versionchanged:: 2.2
+ |         Added support for multiple columns.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  cache(self)
+ |      Persists the :class:`DataFrame` with the default storage level (`MEMORY_AND_DISK`).
+ |      
+ |      .. note:: The default storage level has changed to `MEMORY_AND_DISK` to match Scala in 2.0.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  checkpoint(self, eager=True)
+ |      Returns a checkpointed version of this Dataset. Checkpointing can be used to truncate the
+ |      logical plan of this :class:`DataFrame`, which is especially useful in iterative algorithms
+ |      where the plan may grow exponentially. It will be saved to files inside the checkpoint
+ |      directory set with :meth:`SparkContext.setCheckpointDir`.
+ |      
+ |      :param eager: Whether to checkpoint this :class:`DataFrame` immediately
+ |      
+ |      .. note:: Experimental
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  coalesce(self, numPartitions)
+ |      Returns a new :class:`DataFrame` that has exactly `numPartitions` partitions.
+ |      
+ |      :param numPartitions: int, to specify the target number of partitions
+ |      
+ |      Similar to coalesce defined on an :class:`RDD`, this operation results in a
+ |      narrow dependency, e.g. if you go from 1000 partitions to 100 partitions,
+ |      there will not be a shuffle, instead each of the 100 new partitions will
+ |      claim 10 of the current partitions. If a larger number of partitions is requested,
+ |      it will stay at the current number of partitions.
+ |      
+ |      However, if you&#39;re doing a drastic coalesce, e.g. to numPartitions = 1,
+ |      this may result in your computation taking place on fewer nodes than
+ |      you like (e.g. one node in the case of numPartitions = 1). To avoid this,
+ |      you can call repartition(). This will add a shuffle step, but means the
+ |      current upstream partitions will be executed in parallel (per whatever
+ |      the current partitioning is).
+ |      
+ |      &gt;&gt;&gt; df.coalesce(1).rdd.getNumPartitions()
+ |      1
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  colRegex(self, colName)
+ |      Selects column based on the column name specified as a regex and returns it
+ |      as :class:`Column`.
+ |      
+ |      :param colName: string, column name specified as a regex.
+ |      
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#34;a&#34;, 1), (&#34;b&#34;, 2), (&#34;c&#34;,  3)], [&#34;Col1&#34;, &#34;Col2&#34;])
+ |      &gt;&gt;&gt; df.select(df.colRegex(&#34;`(Col1)?+.+`&#34;)).show()
+ |      +----+
+ |      |Col2|
+ |      +----+
+ |      |   1|
+ |      |   2|
+ |      |   3|
+ |      +----+
+ |      
+ |      .. versionadded:: 2.3
+ |  
+ |  collect(self)
+ |      Returns all the records as a list of :class:`Row`.
+ |      
+ |      &gt;&gt;&gt; df.collect()
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  corr(self, col1, col2, method=None)
+ |      Calculates the correlation of two columns of a :class:`DataFrame` as a double value.
+ |      Currently only supports the Pearson Correlation Coefficient.
+ |      :func:`DataFrame.corr` and :func:`DataFrameStatFunctions.corr` are aliases of each other.
+ |      
+ |      :param col1: The name of the first column
+ |      :param col2: The name of the second column
+ |      :param method: The correlation method. Currently only supports &#34;pearson&#34;
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  count(self)
+ |      Returns the number of rows in this :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.count()
+ |      2
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  cov(self, col1, col2)
+ |      Calculate the sample covariance for the given columns, specified by their names, as a
+ |      double value. :func:`DataFrame.cov` and :func:`DataFrameStatFunctions.cov` are aliases.
+ |      
+ |      :param col1: The name of the first column
+ |      :param col2: The name of the second column
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  createGlobalTempView(self, name)
+ |      Creates a global temporary view with this :class:`DataFrame`.
+ |      
+ |      The lifetime of this temporary view is tied to this Spark application.
+ |      throws :class:`TempTableAlreadyExistsException`, if the view name already exists in the
+ |      catalog.
+ |      
+ |      &gt;&gt;&gt; df.createGlobalTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df2 = spark.sql(&#34;select * from global_temp.people&#34;)
+ |      &gt;&gt;&gt; sorted(df.collect()) == sorted(df2.collect())
+ |      True
+ |      &gt;&gt;&gt; df.createGlobalTempView(&#34;people&#34;)  # doctest: +IGNORE_EXCEPTION_DETAIL
+ |      Traceback (most recent call last):
+ |      ...
+ |      AnalysisException: u&#34;Temporary table &#39;people&#39; already exists;&#34;
+ |      &gt;&gt;&gt; spark.catalog.dropGlobalTempView(&#34;people&#34;)
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  createOrReplaceGlobalTempView(self, name)
+ |      Creates or replaces a global temporary view using the given name.
+ |      
+ |      The lifetime of this temporary view is tied to this Spark application.
+ |      
+ |      &gt;&gt;&gt; df.createOrReplaceGlobalTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df2 = df.filter(df.age &gt; 3)
+ |      &gt;&gt;&gt; df2.createOrReplaceGlobalTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df3 = spark.sql(&#34;select * from global_temp.people&#34;)
+ |      &gt;&gt;&gt; sorted(df3.collect()) == sorted(df2.collect())
+ |      True
+ |      &gt;&gt;&gt; spark.catalog.dropGlobalTempView(&#34;people&#34;)
+ |      
+ |      .. versionadded:: 2.2
+ |  
+ |  createOrReplaceTempView(self, name)
+ |      Creates or replaces a local temporary view with this :class:`DataFrame`.
+ |      
+ |      The lifetime of this temporary table is tied to the :class:`SparkSession`
+ |      that was used to create this :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.createOrReplaceTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df2 = df.filter(df.age &gt; 3)
+ |      &gt;&gt;&gt; df2.createOrReplaceTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df3 = spark.sql(&#34;select * from people&#34;)
+ |      &gt;&gt;&gt; sorted(df3.collect()) == sorted(df2.collect())
+ |      True
+ |      &gt;&gt;&gt; spark.catalog.dropTempView(&#34;people&#34;)
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  createTempView(self, name)
+ |      Creates a local temporary view with this :class:`DataFrame`.
+ |      
+ |      The lifetime of this temporary table is tied to the :class:`SparkSession`
+ |      that was used to create this :class:`DataFrame`.
+ |      throws :class:`TempTableAlreadyExistsException`, if the view name already exists in the
+ |      catalog.
+ |      
+ |      &gt;&gt;&gt; df.createTempView(&#34;people&#34;)
+ |      &gt;&gt;&gt; df2 = spark.sql(&#34;select * from people&#34;)
+ |      &gt;&gt;&gt; sorted(df.collect()) == sorted(df2.collect())
+ |      True
+ |      &gt;&gt;&gt; df.createTempView(&#34;people&#34;)  # doctest: +IGNORE_EXCEPTION_DETAIL
+ |      Traceback (most recent call last):
+ |      ...
+ |      AnalysisException: u&#34;Temporary table &#39;people&#39; already exists;&#34;
+ |      &gt;&gt;&gt; spark.catalog.dropTempView(&#34;people&#34;)
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  crossJoin(self, other)
+ |      Returns the cartesian product with another :class:`DataFrame`.
+ |      
+ |      :param other: Right side of the cartesian product.
+ |      
+ |      &gt;&gt;&gt; df.select(&#34;age&#34;, &#34;name&#34;).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df2.select(&#34;name&#34;, &#34;height&#34;).collect()
+ |      [Row(name=&#39;Tom&#39;, height=80), Row(name=&#39;Bob&#39;, height=85)]
+ |      &gt;&gt;&gt; df.crossJoin(df2.select(&#34;height&#34;)).select(&#34;age&#34;, &#34;name&#34;, &#34;height&#34;).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;, height=80), Row(age=2, name=&#39;Alice&#39;, height=85),
+ |       Row(age=5, name=&#39;Bob&#39;, height=80), Row(age=5, name=&#39;Bob&#39;, height=85)]
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  crosstab(self, col1, col2)
+ |      Computes a pair-wise frequency table of the given columns. Also known as a contingency
+ |      table. The number of distinct values for each column should be less than 1e4. At most 1e6
+ |      non-zero pair frequencies will be returned.
+ |      The first column of each row will be the distinct values of `col1` and the column names
+ |      will be the distinct values of `col2`. The name of the first column will be `$col1_$col2`.
+ |      Pairs that have no occurrences will have zero as their counts.
+ |      :func:`DataFrame.crosstab` and :func:`DataFrameStatFunctions.crosstab` are aliases.
+ |      
+ |      :param col1: The name of the first column. Distinct items will make the first item of
+ |          each row.
+ |      :param col2: The name of the second column. Distinct items will make the column names
+ |          of the :class:`DataFrame`.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  cube(self, *cols)
+ |      Create a multi-dimensional cube for the current :class:`DataFrame` using
+ |      the specified columns, so we can run aggregations on them.
+ |      
+ |      &gt;&gt;&gt; df.cube(&#34;name&#34;, df.age).count().orderBy(&#34;name&#34;, &#34;age&#34;).show()
+ |      +-----+----+-----+
+ |      | name| age|count|
+ |      +-----+----+-----+
+ |      | null|null|    2|
+ |      | null|   2|    1|
+ |      | null|   5|    1|
+ |      |Alice|null|    1|
+ |      |Alice|   2|    1|
+ |      |  Bob|null|    1|
+ |      |  Bob|   5|    1|
+ |      +-----+----+-----+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  describe(self, *cols)
+ |      Computes basic statistics for numeric and string columns.
+ |      
+ |      This include count, mean, stddev, min, and max. If no columns are
+ |      given, this function computes statistics for all numerical or string columns.
+ |      
+ |      .. note:: This function is meant for exploratory data analysis, as we make no
+ |          guarantee about the backward compatibility of the schema of the resulting
+ |          :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.describe([&#39;age&#39;]).show()
+ |      +-------+------------------+
+ |      |summary|               age|
+ |      +-------+------------------+
+ |      |  count|                 2|
+ |      |   mean|               3.5|
+ |      | stddev|2.1213203435596424|
+ |      |    min|                 2|
+ |      |    max|                 5|
+ |      +-------+------------------+
+ |      &gt;&gt;&gt; df.describe().show()
+ |      +-------+------------------+-----+
+ |      |summary|               age| name|
+ |      +-------+------------------+-----+
+ |      |  count|                 2|    2|
+ |      |   mean|               3.5| null|
+ |      | stddev|2.1213203435596424| null|
+ |      |    min|                 2|Alice|
+ |      |    max|                 5|  Bob|
+ |      +-------+------------------+-----+
+ |      
+ |      Use summary for expanded statistics and control over which statistics to compute.
+ |      
+ |      .. versionadded:: 1.3.1
+ |  
+ |  distinct(self)
+ |      Returns a new :class:`DataFrame` containing the distinct rows in this :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.distinct().count()
+ |      2
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  drop(self, *cols)
+ |      Returns a new :class:`DataFrame` that drops the specified column.
+ |      This is a no-op if schema doesn&#39;t contain the given column name(s).
+ |      
+ |      :param cols: a string name of the column to drop, or a
+ |          :class:`Column` to drop, or a list of string name of the columns to drop.
+ |      
+ |      &gt;&gt;&gt; df.drop(&#39;age&#39;).collect()
+ |      [Row(name=&#39;Alice&#39;), Row(name=&#39;Bob&#39;)]
+ |      
+ |      &gt;&gt;&gt; df.drop(df.age).collect()
+ |      [Row(name=&#39;Alice&#39;), Row(name=&#39;Bob&#39;)]
+ |      
+ |      &gt;&gt;&gt; df.join(df2, df.name == df2.name, &#39;inner&#39;).drop(df.name).collect()
+ |      [Row(age=5, height=85, name=&#39;Bob&#39;)]
+ |      
+ |      &gt;&gt;&gt; df.join(df2, df.name == df2.name, &#39;inner&#39;).drop(df2.name).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;, height=85)]
+ |      
+ |      &gt;&gt;&gt; df.join(df2, &#39;name&#39;, &#39;inner&#39;).drop(&#39;age&#39;, &#39;height&#39;).collect()
+ |      [Row(name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  dropDuplicates(self, subset=None)
+ |      Return a new :class:`DataFrame` with duplicate rows removed,
+ |      optionally only considering certain columns.
+ |      
+ |      For a static batch :class:`DataFrame`, it just drops duplicate rows. For a streaming
+ |      :class:`DataFrame`, it will keep all data across triggers as intermediate state to drop
+ |      duplicates rows. You can use :func:`withWatermark` to limit how late the duplicate data can
+ |      be and system will accordingly limit the state. In addition, too late data older than
+ |      watermark will be dropped to avoid any possibility of duplicates.
+ |      
+ |      :func:`drop_duplicates` is an alias for :func:`dropDuplicates`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = sc.parallelize([ \
+ |      ...     Row(name=&#39;Alice&#39;, age=5, height=80), \
+ |      ...     Row(name=&#39;Alice&#39;, age=5, height=80), \
+ |      ...     Row(name=&#39;Alice&#39;, age=10, height=80)]).toDF()
+ |      &gt;&gt;&gt; df.dropDuplicates().show()
+ |      +---+------+-----+
+ |      |age|height| name|
+ |      +---+------+-----+
+ |      |  5|    80|Alice|
+ |      | 10|    80|Alice|
+ |      +---+------+-----+
+ |      
+ |      &gt;&gt;&gt; df.dropDuplicates([&#39;name&#39;, &#39;height&#39;]).show()
+ |      +---+------+-----+
+ |      |age|height| name|
+ |      +---+------+-----+
+ |      |  5|    80|Alice|
+ |      +---+------+-----+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  drop_duplicates = dropDuplicates(self, subset=None)
+ |      :func:`drop_duplicates` is an alias for :func:`dropDuplicates`.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  dropna(self, how=&#39;any&#39;, thresh=None, subset=None)
+ |      Returns a new :class:`DataFrame` omitting rows with null values.
+ |      :func:`DataFrame.dropna` and :func:`DataFrameNaFunctions.drop` are aliases of each other.
+ |      
+ |      :param how: &#39;any&#39; or &#39;all&#39;.
+ |          If &#39;any&#39;, drop a row if it contains any nulls.
+ |          If &#39;all&#39;, drop a row only if all its values are null.
+ |      :param thresh: int, default None
+ |          If specified, drop rows that have less than `thresh` non-null values.
+ |          This overwrites the `how` parameter.
+ |      :param subset: optional list of column names to consider.
+ |      
+ |      &gt;&gt;&gt; df4.na.drop().show()
+ |      +---+------+-----+
+ |      |age|height| name|
+ |      +---+------+-----+
+ |      | 10|    80|Alice|
+ |      +---+------+-----+
+ |      
+ |      .. versionadded:: 1.3.1
+ |  
+ |  exceptAll(self, other)
+ |      Return a new :class:`DataFrame` containing rows in this :class:`DataFrame` but
+ |      not in another :class:`DataFrame` while preserving duplicates.
+ |      
+ |      This is equivalent to `EXCEPT ALL` in SQL.
+ |      
+ |      &gt;&gt;&gt; df1 = spark.createDataFrame(
+ |      ...         [(&#34;a&#34;, 1), (&#34;a&#34;, 1), (&#34;a&#34;, 1), (&#34;a&#34;, 2), (&#34;b&#34;,  3), (&#34;c&#34;, 4)], [&#34;C1&#34;, &#34;C2&#34;])
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame([(&#34;a&#34;, 1), (&#34;b&#34;, 3)], [&#34;C1&#34;, &#34;C2&#34;])
+ |      
+ |      &gt;&gt;&gt; df1.exceptAll(df2).show()
+ |      +---+---+
+ |      | C1| C2|
+ |      +---+---+
+ |      |  a|  1|
+ |      |  a|  1|
+ |      |  a|  2|
+ |      |  c|  4|
+ |      +---+---+
+ |      
+ |      Also as standard in SQL, this function resolves columns by position (not by name).
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  explain(self, extended=None, mode=None)
+ |      Prints the (logical and physical) plans to the console for debugging purpose.
+ |      
+ |      :param extended: boolean, default ``False``. If ``False``, prints only the physical plan.
+ |          When this is a string without specifying the ``mode``, it works as the mode is
+ |          specified.
+ |      :param mode: specifies the expected output format of plans.
+ |      
+ |          * ``simple``: Print only a physical plan.
+ |          * ``extended``: Print both logical and physical plans.
+ |          * ``codegen``: Print a physical plan and generated codes if they are available.
+ |          * ``cost``: Print a logical plan and statistics if they are available.
+ |          * ``formatted``: Split explain output into two sections: a physical plan outline                 and node details.
+ |      
+ |      &gt;&gt;&gt; df.explain()
+ |      == Physical Plan ==
+ |      *(1) Scan ExistingRDD[age#0,name#1]
+ |      
+ |      &gt;&gt;&gt; df.explain(True)
+ |      == Parsed Logical Plan ==
+ |      ...
+ |      == Analyzed Logical Plan ==
+ |      ...
+ |      == Optimized Logical Plan ==
+ |      ...
+ |      == Physical Plan ==
+ |      ...
+ |      
+ |      &gt;&gt;&gt; df.explain(mode=&#34;formatted&#34;)
+ |      == Physical Plan ==
+ |      * Scan ExistingRDD (1)
+ |      (1) Scan ExistingRDD [codegen id : 1]
+ |      Output [2]: [age#0, name#1]
+ |      ...
+ |      
+ |      &gt;&gt;&gt; df.explain(&#34;cost&#34;)
+ |      == Optimized Logical Plan ==
+ |      ...Statistics...
+ |      ...
+ |      
+ |      .. versionchanged:: 3.0.0
+ |         Added optional argument `mode` to specify the expected output format of plans.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  fillna(self, value, subset=None)
+ |      Replace null values, alias for ``na.fill()``.
+ |      :func:`DataFrame.fillna` and :func:`DataFrameNaFunctions.fill` are aliases of each other.
+ |      
+ |      :param value: int, long, float, string, bool or dict.
+ |          Value to replace null values with.
+ |          If the value is a dict, then `subset` is ignored and `value` must be a mapping
+ |          from column name (string) to replacement value. The replacement value must be
+ |          an int, long, float, boolean, or string.
+ |      :param subset: optional list of column names to consider.
+ |          Columns specified in subset that do not have matching data type are ignored.
+ |          For example, if `value` is a string, and subset contains a non-string column,
+ |          then the non-string column is simply ignored.
+ |      
+ |      &gt;&gt;&gt; df4.na.fill(50).show()
+ |      +---+------+-----+
+ |      |age|height| name|
+ |      +---+------+-----+
+ |      | 10|    80|Alice|
+ |      |  5|    50|  Bob|
+ |      | 50|    50|  Tom|
+ |      | 50|    50| null|
+ |      +---+------+-----+
+ |      
+ |      &gt;&gt;&gt; df5.na.fill(False).show()
+ |      +----+-------+-----+
+ |      | age|   name|  spy|
+ |      +----+-------+-----+
+ |      |  10|  Alice|false|
+ |      |   5|    Bob|false|
+ |      |null|Mallory| true|
+ |      +----+-------+-----+
+ |      
+ |      &gt;&gt;&gt; df4.na.fill({&#39;age&#39;: 50, &#39;name&#39;: &#39;unknown&#39;}).show()
+ |      +---+------+-------+
+ |      |age|height|   name|
+ |      +---+------+-------+
+ |      | 10|    80|  Alice|
+ |      |  5|  null|    Bob|
+ |      | 50|  null|    Tom|
+ |      | 50|  null|unknown|
+ |      +---+------+-------+
+ |      
+ |      .. versionadded:: 1.3.1
+ |  
+ |  filter(self, condition)
+ |      Filters rows using the given condition.
+ |      
+ |      :func:`where` is an alias for :func:`filter`.
+ |      
+ |      :param condition: a :class:`Column` of :class:`types.BooleanType`
+ |          or a string of SQL expression.
+ |      
+ |      &gt;&gt;&gt; df.filter(df.age &gt; 3).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df.where(df.age == 2).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      
+ |      &gt;&gt;&gt; df.filter(&#34;age &gt; 3&#34;).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df.where(&#34;age = 2&#34;).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  first(self)
+ |      Returns the first row as a :class:`Row`.
+ |      
+ |      &gt;&gt;&gt; df.first()
+ |      Row(age=2, name=&#39;Alice&#39;)
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  foreach(self, f)
+ |      Applies the ``f`` function to all :class:`Row` of this :class:`DataFrame`.
+ |      
+ |      This is a shorthand for ``df.rdd.foreach()``.
+ |      
+ |      &gt;&gt;&gt; def f(person):
+ |      ...     print(person.name)
+ |      &gt;&gt;&gt; df.foreach(f)
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  foreachPartition(self, f)
+ |      Applies the ``f`` function to each partition of this :class:`DataFrame`.
+ |      
+ |      This a shorthand for ``df.rdd.foreachPartition()``.
+ |      
+ |      &gt;&gt;&gt; def f(people):
+ |      ...     for person in people:
+ |      ...         print(person.name)
+ |      &gt;&gt;&gt; df.foreachPartition(f)
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  freqItems(self, cols, support=None)
+ |      Finding frequent items for columns, possibly with false positives. Using the
+ |      frequent element count algorithm described in
+ |      &#34;https://doi.org/10.1145/762471.762473, proposed by Karp, Schenker, and Papadimitriou&#34;.
+ |      :func:`DataFrame.freqItems` and :func:`DataFrameStatFunctions.freqItems` are aliases.
+ |      
+ |      .. note:: This function is meant for exploratory data analysis, as we make no
+ |          guarantee about the backward compatibility of the schema of the resulting
+ |          :class:`DataFrame`.
+ |      
+ |      :param cols: Names of the columns to calculate frequent items for as a list or tuple of
+ |          strings.
+ |      :param support: The frequency with which to consider an item &#39;frequent&#39;. Default is 1%.
+ |          The support must be greater than 1e-4.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  groupBy(self, *cols)
+ |      Groups the :class:`DataFrame` using the specified columns,
+ |      so we can run aggregation on them. See :class:`GroupedData`
+ |      for all the available aggregate functions.
+ |      
+ |      :func:`groupby` is an alias for :func:`groupBy`.
+ |      
+ |      :param cols: list of columns to group by.
+ |          Each element should be a column name (string) or an expression (:class:`Column`).
+ |      
+ |      &gt;&gt;&gt; df.groupBy().avg().collect()
+ |      [Row(avg(age)=3.5)]
+ |      &gt;&gt;&gt; sorted(df.groupBy(&#39;name&#39;).agg({&#39;age&#39;: &#39;mean&#39;}).collect())
+ |      [Row(name=&#39;Alice&#39;, avg(age)=2.0), Row(name=&#39;Bob&#39;, avg(age)=5.0)]
+ |      &gt;&gt;&gt; sorted(df.groupBy(df.name).avg().collect())
+ |      [Row(name=&#39;Alice&#39;, avg(age)=2.0), Row(name=&#39;Bob&#39;, avg(age)=5.0)]
+ |      &gt;&gt;&gt; sorted(df.groupBy([&#39;name&#39;, df.age]).count().collect())
+ |      [Row(name=&#39;Alice&#39;, age=2, count=1), Row(name=&#39;Bob&#39;, age=5, count=1)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  groupby = groupBy(self, *cols)
+ |      :func:`groupby` is an alias for :func:`groupBy`.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  head(self, n=None)
+ |      Returns the first ``n`` rows.
+ |      
+ |      .. note:: This method should only be used if the resulting array is expected
+ |          to be small, as all the data is loaded into the driver&#39;s memory.
+ |      
+ |      :param n: int, default 1. Number of rows to return.
+ |      :return: If n is greater than 1, return a list of :class:`Row`.
+ |          If n is 1, return a single Row.
+ |      
+ |      &gt;&gt;&gt; df.head()
+ |      Row(age=2, name=&#39;Alice&#39;)
+ |      &gt;&gt;&gt; df.head(1)
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  hint(self, name, *parameters)
+ |      Specifies some hint on the current :class:`DataFrame`.
+ |      
+ |      :param name: A name of the hint.
+ |      :param parameters: Optional parameters.
+ |      :return: :class:`DataFrame`
+ |      
+ |      &gt;&gt;&gt; df.join(df2.hint(&#34;broadcast&#34;), &#34;name&#34;).show()
+ |      +----+---+------+
+ |      |name|age|height|
+ |      +----+---+------+
+ |      | Bob|  5|    85|
+ |      +----+---+------+
+ |      
+ |      .. versionadded:: 2.2
+ |  
+ |  intersect(self, other)
+ |      Return a new :class:`DataFrame` containing rows only in
+ |      both this :class:`DataFrame` and another :class:`DataFrame`.
+ |      
+ |      This is equivalent to `INTERSECT` in SQL.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  intersectAll(self, other)
+ |      Return a new :class:`DataFrame` containing rows in both this :class:`DataFrame`
+ |      and another :class:`DataFrame` while preserving duplicates.
+ |      
+ |      This is equivalent to `INTERSECT ALL` in SQL.
+ |      &gt;&gt;&gt; df1 = spark.createDataFrame([(&#34;a&#34;, 1), (&#34;a&#34;, 1), (&#34;b&#34;, 3), (&#34;c&#34;, 4)], [&#34;C1&#34;, &#34;C2&#34;])
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame([(&#34;a&#34;, 1), (&#34;a&#34;, 1), (&#34;b&#34;, 3)], [&#34;C1&#34;, &#34;C2&#34;])
+ |      
+ |      &gt;&gt;&gt; df1.intersectAll(df2).sort(&#34;C1&#34;, &#34;C2&#34;).show()
+ |      +---+---+
+ |      | C1| C2|
+ |      +---+---+
+ |      |  a|  1|
+ |      |  a|  1|
+ |      |  b|  3|
+ |      +---+---+
+ |      
+ |      Also as standard in SQL, this function resolves columns by position (not by name).
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  isLocal(self)
+ |      Returns ``True`` if the :func:`collect` and :func:`take` methods can be run locally
+ |      (without any Spark executors).
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  join(self, other, on=None, how=None)
+ |      Joins with another :class:`DataFrame`, using the given join expression.
+ |      
+ |      :param other: Right side of the join
+ |      :param on: a string for the join column name, a list of column names,
+ |          a join expression (Column), or a list of Columns.
+ |          If `on` is a string or a list of strings indicating the name of the join column(s),
+ |          the column(s) must exist on both sides, and this performs an equi-join.
+ |      :param how: str, default ``inner``. Must be one of: ``inner``, ``cross``, ``outer``,
+ |          ``full``, ``fullouter``, ``full_outer``, ``left``, ``leftouter``, ``left_outer``,
+ |          ``right``, ``rightouter``, ``right_outer``, ``semi``, ``leftsemi``, ``left_semi``,
+ |          ``anti``, ``leftanti`` and ``left_anti``.
+ |      
+ |      The following performs a full outer join between ``df1`` and ``df2``.
+ |      &gt;&gt;&gt; from pyspark.sql.functions import desc
+ |      &gt;&gt;&gt; df.join(df2, df.name == df2.name, &#39;outer&#39;).select(df.name, df2.height)                 .sort(desc(&#34;name&#34;)).collect()
+ |      [Row(name=&#39;Bob&#39;, height=85), Row(name=&#39;Alice&#39;, height=None), Row(name=None, height=80)]
+ |      
+ |      &gt;&gt;&gt; df.join(df2, &#39;name&#39;, &#39;outer&#39;).select(&#39;name&#39;, &#39;height&#39;).sort(desc(&#34;name&#34;)).collect()
+ |      [Row(name=&#39;Tom&#39;, height=80), Row(name=&#39;Bob&#39;, height=85), Row(name=&#39;Alice&#39;, height=None)]
+ |      
+ |      &gt;&gt;&gt; cond = [df.name == df3.name, df.age == df3.age]
+ |      &gt;&gt;&gt; df.join(df3, cond, &#39;outer&#39;).select(df.name, df3.age).collect()
+ |      [Row(name=&#39;Alice&#39;, age=2), Row(name=&#39;Bob&#39;, age=5)]
+ |      
+ |      &gt;&gt;&gt; df.join(df2, &#39;name&#39;).select(df.name, df2.height).collect()
+ |      [Row(name=&#39;Bob&#39;, height=85)]
+ |      
+ |      &gt;&gt;&gt; df.join(df4, [&#39;name&#39;, &#39;age&#39;]).select(df.name, df.age).collect()
+ |      [Row(name=&#39;Bob&#39;, age=5)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  limit(self, num)
+ |      Limits the result count to the number specified.
+ |      
+ |      &gt;&gt;&gt; df.limit(1).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.limit(0).collect()
+ |      []
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  localCheckpoint(self, eager=True)
+ |      Returns a locally checkpointed version of this Dataset. Checkpointing can be used to
+ |      truncate the logical plan of this :class:`DataFrame`, which is especially useful in
+ |      iterative algorithms where the plan may grow exponentially. Local checkpoints are
+ |      stored in the executors using the caching subsystem and therefore they are not reliable.
+ |      
+ |      :param eager: Whether to checkpoint this :class:`DataFrame` immediately
+ |      
+ |      .. note:: Experimental
+ |      
+ |      .. versionadded:: 2.3
+ |  
+ |  orderBy = sort(self, *cols, **kwargs)
+ |  
+ |  persist(self, storageLevel=StorageLevel(True, True, False, False, 1))
+ |      Sets the storage level to persist the contents of the :class:`DataFrame` across
+ |      operations after the first time it is computed. This can only be used to assign
+ |      a new storage level if the :class:`DataFrame` does not have a storage level set yet.
+ |      If no storage level is specified defaults to (`MEMORY_AND_DISK`).
+ |      
+ |      .. note:: The default storage level has changed to `MEMORY_AND_DISK` to match Scala in 2.0.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  printSchema(self)
+ |      Prints out the schema in the tree format.
+ |      
+ |      &gt;&gt;&gt; df.printSchema()
+ |      root
+ |       |-- age: integer (nullable = true)
+ |       |-- name: string (nullable = true)
+ |      &lt;BLANKLINE&gt;
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  randomSplit(self, weights, seed=None)
+ |      Randomly splits this :class:`DataFrame` with the provided weights.
+ |      
+ |      :param weights: list of doubles as weights with which to split the :class:`DataFrame`.
+ |          Weights will be normalized if they don&#39;t sum up to 1.0.
+ |      :param seed: The seed for sampling.
+ |      
+ |      &gt;&gt;&gt; splits = df4.randomSplit([1.0, 2.0], 24)
+ |      &gt;&gt;&gt; splits[0].count()
+ |      2
+ |      
+ |      &gt;&gt;&gt; splits[1].count()
+ |      2
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  registerTempTable(self, name)
+ |      Registers this DataFrame as a temporary table using the given name.
+ |      
+ |      The lifetime of this temporary table is tied to the :class:`SparkSession`
+ |      that was used to create this :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.registerTempTable(&#34;people&#34;)
+ |      &gt;&gt;&gt; df2 = spark.sql(&#34;select * from people&#34;)
+ |      &gt;&gt;&gt; sorted(df.collect()) == sorted(df2.collect())
+ |      True
+ |      &gt;&gt;&gt; spark.catalog.dropTempView(&#34;people&#34;)
+ |      
+ |      .. note:: Deprecated in 2.0, use createOrReplaceTempView instead.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  repartition(self, numPartitions, *cols)
+ |      Returns a new :class:`DataFrame` partitioned by the given partitioning expressions. The
+ |      resulting :class:`DataFrame` is hash partitioned.
+ |      
+ |      :param numPartitions:
+ |          can be an int to specify the target number of partitions or a Column.
+ |          If it is a Column, it will be used as the first partitioning column. If not specified,
+ |          the default number of partitions is used.
+ |      
+ |      .. versionchanged:: 1.6
+ |         Added optional arguments to specify the partitioning columns. Also made numPartitions
+ |         optional if partitioning columns are specified.
+ |      
+ |      &gt;&gt;&gt; df.repartition(10).rdd.getNumPartitions()
+ |      10
+ |      &gt;&gt;&gt; data = df.union(df).repartition(&#34;age&#34;)
+ |      &gt;&gt;&gt; data.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  5|  Bob|
+ |      |  5|  Bob|
+ |      |  2|Alice|
+ |      |  2|Alice|
+ |      +---+-----+
+ |      &gt;&gt;&gt; data = data.repartition(7, &#34;age&#34;)
+ |      &gt;&gt;&gt; data.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      +---+-----+
+ |      &gt;&gt;&gt; data.rdd.getNumPartitions()
+ |      7
+ |      &gt;&gt;&gt; data = data.repartition(&#34;name&#34;, &#34;age&#34;)
+ |      &gt;&gt;&gt; data.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  5|  Bob|
+ |      |  5|  Bob|
+ |      |  2|Alice|
+ |      |  2|Alice|
+ |      +---+-----+
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  repartitionByRange(self, numPartitions, *cols)
+ |      Returns a new :class:`DataFrame` partitioned by the given partitioning expressions. The
+ |      resulting :class:`DataFrame` is range partitioned.
+ |      
+ |      :param numPartitions:
+ |          can be an int to specify the target number of partitions or a Column.
+ |          If it is a Column, it will be used as the first partitioning column. If not specified,
+ |          the default number of partitions is used.
+ |      
+ |      At least one partition-by expression must be specified.
+ |      When no explicit sort order is specified, &#34;ascending nulls first&#34; is assumed.
+ |      
+ |      Note that due to performance reasons this method uses sampling to estimate the ranges.
+ |      Hence, the output may not be consistent, since sampling can return different values.
+ |      The sample size can be controlled by the config
+ |      `spark.sql.execution.rangeExchange.sampleSizePerPartition`.
+ |      
+ |      &gt;&gt;&gt; df.repartitionByRange(2, &#34;age&#34;).rdd.getNumPartitions()
+ |      2
+ |      &gt;&gt;&gt; df.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      +---+-----+
+ |      &gt;&gt;&gt; df.repartitionByRange(1, &#34;age&#34;).rdd.getNumPartitions()
+ |      1
+ |      &gt;&gt;&gt; data = df.repartitionByRange(&#34;age&#34;)
+ |      &gt;&gt;&gt; df.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      +---+-----+
+ |      
+ |      .. versionadded:: 2.4.0
+ |  
+ |  replace(self, to_replace, value=&lt;no value&gt;, subset=None)
+ |      Returns a new :class:`DataFrame` replacing a value with another value.
+ |      :func:`DataFrame.replace` and :func:`DataFrameNaFunctions.replace` are
+ |      aliases of each other.
+ |      Values to_replace and value must have the same type and can only be numerics, booleans,
+ |      or strings. Value can have None. When replacing, the new value will be cast
+ |      to the type of the existing column.
+ |      For numeric replacements all values to be replaced should have unique
+ |      floating point representation. In case of conflicts (for example with `{42: -1, 42.0: 1}`)
+ |      and arbitrary replacement will be used.
+ |      
+ |      :param to_replace: bool, int, long, float, string, list or dict.
+ |          Value to be replaced.
+ |          If the value is a dict, then `value` is ignored or can be omitted, and `to_replace`
+ |          must be a mapping between a value and a replacement.
+ |      :param value: bool, int, long, float, string, list or None.
+ |          The replacement value must be a bool, int, long, float, string or None. If `value` is a
+ |          list, `value` should be of the same length and type as `to_replace`.
+ |          If `value` is a scalar and `to_replace` is a sequence, then `value` is
+ |          used as a replacement for each item in `to_replace`.
+ |      :param subset: optional list of column names to consider.
+ |          Columns specified in subset that do not have matching data type are ignored.
+ |          For example, if `value` is a string, and subset contains a non-string column,
+ |          then the non-string column is simply ignored.
+ |      
+ |      &gt;&gt;&gt; df4.na.replace(10, 20).show()
+ |      +----+------+-----+
+ |      | age|height| name|
+ |      +----+------+-----+
+ |      |  20|    80|Alice|
+ |      |   5|  null|  Bob|
+ |      |null|  null|  Tom|
+ |      |null|  null| null|
+ |      +----+------+-----+
+ |      
+ |      &gt;&gt;&gt; df4.na.replace(&#39;Alice&#39;, None).show()
+ |      +----+------+----+
+ |      | age|height|name|
+ |      +----+------+----+
+ |      |  10|    80|null|
+ |      |   5|  null| Bob|
+ |      |null|  null| Tom|
+ |      |null|  null|null|
+ |      +----+------+----+
+ |      
+ |      &gt;&gt;&gt; df4.na.replace({&#39;Alice&#39;: None}).show()
+ |      +----+------+----+
+ |      | age|height|name|
+ |      +----+------+----+
+ |      |  10|    80|null|
+ |      |   5|  null| Bob|
+ |      |null|  null| Tom|
+ |      |null|  null|null|
+ |      +----+------+----+
+ |      
+ |      &gt;&gt;&gt; df4.na.replace([&#39;Alice&#39;, &#39;Bob&#39;], [&#39;A&#39;, &#39;B&#39;], &#39;name&#39;).show()
+ |      +----+------+----+
+ |      | age|height|name|
+ |      +----+------+----+
+ |      |  10|    80|   A|
+ |      |   5|  null|   B|
+ |      |null|  null| Tom|
+ |      |null|  null|null|
+ |      +----+------+----+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  rollup(self, *cols)
+ |      Create a multi-dimensional rollup for the current :class:`DataFrame` using
+ |      the specified columns, so we can run aggregation on them.
+ |      
+ |      &gt;&gt;&gt; df.rollup(&#34;name&#34;, df.age).count().orderBy(&#34;name&#34;, &#34;age&#34;).show()
+ |      +-----+----+-----+
+ |      | name| age|count|
+ |      +-----+----+-----+
+ |      | null|null|    2|
+ |      |Alice|null|    1|
+ |      |Alice|   2|    1|
+ |      |  Bob|null|    1|
+ |      |  Bob|   5|    1|
+ |      +-----+----+-----+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  sample(self, withReplacement=None, fraction=None, seed=None)
+ |      Returns a sampled subset of this :class:`DataFrame`.
+ |      
+ |      :param withReplacement: Sample with replacement or not (default ``False``).
+ |      :param fraction: Fraction of rows to generate, range [0.0, 1.0].
+ |      :param seed: Seed for sampling (default a random seed).
+ |      
+ |      .. note:: This is not guaranteed to provide exactly the fraction specified of the total
+ |          count of the given :class:`DataFrame`.
+ |      
+ |      .. note:: `fraction` is required and, `withReplacement` and `seed` are optional.
+ |      
+ |      &gt;&gt;&gt; df = spark.range(10)
+ |      &gt;&gt;&gt; df.sample(0.5, 3).count()
+ |      7
+ |      &gt;&gt;&gt; df.sample(fraction=0.5, seed=3).count()
+ |      7
+ |      &gt;&gt;&gt; df.sample(withReplacement=True, fraction=0.5, seed=3).count()
+ |      1
+ |      &gt;&gt;&gt; df.sample(1.0).count()
+ |      10
+ |      &gt;&gt;&gt; df.sample(fraction=1.0).count()
+ |      10
+ |      &gt;&gt;&gt; df.sample(False, fraction=1.0).count()
+ |      10
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  sampleBy(self, col, fractions, seed=None)
+ |      Returns a stratified sample without replacement based on the
+ |      fraction given on each stratum.
+ |      
+ |      :param col: column that defines strata
+ |      :param fractions:
+ |          sampling fraction for each stratum. If a stratum is not
+ |          specified, we treat its fraction as zero.
+ |      :param seed: random seed
+ |      :return: a new :class:`DataFrame` that represents the stratified sample
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql.functions import col
+ |      &gt;&gt;&gt; dataset = sqlContext.range(0, 100).select((col(&#34;id&#34;) % 3).alias(&#34;key&#34;))
+ |      &gt;&gt;&gt; sampled = dataset.sampleBy(&#34;key&#34;, fractions={0: 0.1, 1: 0.2}, seed=0)
+ |      &gt;&gt;&gt; sampled.groupBy(&#34;key&#34;).count().orderBy(&#34;key&#34;).show()
+ |      +---+-----+
+ |      |key|count|
+ |      +---+-----+
+ |      |  0|    3|
+ |      |  1|    6|
+ |      +---+-----+
+ |      &gt;&gt;&gt; dataset.sampleBy(col(&#34;key&#34;), fractions={2: 1.0}, seed=0).count()
+ |      33
+ |      
+ |      .. versionchanged:: 3.0
+ |         Added sampling by a column of :class:`Column`
+ |      
+ |      .. versionadded:: 1.5
+ |  
+ |  select(self, *cols)
+ |      Projects a set of expressions and returns a new :class:`DataFrame`.
+ |      
+ |      :param cols: list of column names (string) or expressions (:class:`Column`).
+ |          If one of the column names is &#39;*&#39;, that column is expanded to include all columns
+ |          in the current :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.select(&#39;*&#39;).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df.select(&#39;name&#39;, &#39;age&#39;).collect()
+ |      [Row(name=&#39;Alice&#39;, age=2), Row(name=&#39;Bob&#39;, age=5)]
+ |      &gt;&gt;&gt; df.select(df.name, (df.age + 10).alias(&#39;age&#39;)).collect()
+ |      [Row(name=&#39;Alice&#39;, age=12), Row(name=&#39;Bob&#39;, age=15)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  selectExpr(self, *expr)
+ |      Projects a set of SQL expressions and returns a new :class:`DataFrame`.
+ |      
+ |      This is a variant of :func:`select` that accepts SQL expressions.
+ |      
+ |      &gt;&gt;&gt; df.selectExpr(&#34;age * 2&#34;, &#34;abs(age)&#34;).collect()
+ |      [Row((age * 2)=4, abs(age)=2), Row((age * 2)=10, abs(age)=5)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  show(self, n=20, truncate=True, vertical=False)
+ |      Prints the first ``n`` rows to the console.
+ |      
+ |      :param n: Number of rows to show.
+ |      :param truncate: If set to ``True``, truncate strings longer than 20 chars by default.
+ |          If set to a number greater than one, truncates long strings to length ``truncate``
+ |          and align cells right.
+ |      :param vertical: If set to ``True``, print output rows vertically (one line
+ |          per column value).
+ |      
+ |      &gt;&gt;&gt; df
+ |      DataFrame[age: int, name: string]
+ |      &gt;&gt;&gt; df.show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      +---+-----+
+ |      &gt;&gt;&gt; df.show(truncate=3)
+ |      +---+----+
+ |      |age|name|
+ |      +---+----+
+ |      |  2| Ali|
+ |      |  5| Bob|
+ |      +---+----+
+ |      &gt;&gt;&gt; df.show(vertical=True)
+ |      -RECORD 0-----
+ |       age  | 2
+ |       name | Alice
+ |      -RECORD 1-----
+ |       age  | 5
+ |       name | Bob
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  sort(self, *cols, **kwargs)
+ |      Returns a new :class:`DataFrame` sorted by the specified column(s).
+ |      
+ |      :param cols: list of :class:`Column` or column names to sort by.
+ |      :param ascending: boolean or list of boolean (default ``True``).
+ |          Sort ascending vs. descending. Specify list for multiple sort orders.
+ |          If a list is specified, length of the list must equal length of the `cols`.
+ |      
+ |      &gt;&gt;&gt; df.sort(df.age.desc()).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;), Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.sort(&#34;age&#34;, ascending=False).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;), Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.orderBy(df.age.desc()).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;), Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; from pyspark.sql.functions import *
+ |      &gt;&gt;&gt; df.sort(asc(&#34;age&#34;)).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df.orderBy(desc(&#34;age&#34;), &#34;name&#34;).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;), Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.orderBy([&#34;age&#34;, &#34;name&#34;], ascending=[0, 1]).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;), Row(age=2, name=&#39;Alice&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  sortWithinPartitions(self, *cols, **kwargs)
+ |      Returns a new :class:`DataFrame` with each partition sorted by the specified column(s).
+ |      
+ |      :param cols: list of :class:`Column` or column names to sort by.
+ |      :param ascending: boolean or list of boolean (default ``True``).
+ |          Sort ascending vs. descending. Specify list for multiple sort orders.
+ |          If a list is specified, length of the list must equal length of the `cols`.
+ |      
+ |      &gt;&gt;&gt; df.sortWithinPartitions(&#34;age&#34;, ascending=False).show()
+ |      +---+-----+
+ |      |age| name|
+ |      +---+-----+
+ |      |  2|Alice|
+ |      |  5|  Bob|
+ |      +---+-----+
+ |      
+ |      .. versionadded:: 1.6
+ |  
+ |  subtract(self, other)
+ |      Return a new :class:`DataFrame` containing rows in this :class:`DataFrame`
+ |      but not in another :class:`DataFrame`.
+ |      
+ |      This is equivalent to `EXCEPT DISTINCT` in SQL.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  summary(self, *statistics)
+ |      Computes specified statistics for numeric and string columns. Available statistics are:
+ |      - count
+ |      - mean
+ |      - stddev
+ |      - min
+ |      - max
+ |      - arbitrary approximate percentiles specified as a percentage (eg, 75%)
+ |      
+ |      If no statistics are given, this function computes count, mean, stddev, min,
+ |      approximate quartiles (percentiles at 25%, 50%, and 75%), and max.
+ |      
+ |      .. note:: This function is meant for exploratory data analysis, as we make no
+ |          guarantee about the backward compatibility of the schema of the resulting
+ |          :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; df.summary().show()
+ |      +-------+------------------+-----+
+ |      |summary|               age| name|
+ |      +-------+------------------+-----+
+ |      |  count|                 2|    2|
+ |      |   mean|               3.5| null|
+ |      | stddev|2.1213203435596424| null|
+ |      |    min|                 2|Alice|
+ |      |    25%|                 2| null|
+ |      |    50%|                 2| null|
+ |      |    75%|                 5| null|
+ |      |    max|                 5|  Bob|
+ |      +-------+------------------+-----+
+ |      
+ |      &gt;&gt;&gt; df.summary(&#34;count&#34;, &#34;min&#34;, &#34;25%&#34;, &#34;75%&#34;, &#34;max&#34;).show()
+ |      +-------+---+-----+
+ |      |summary|age| name|
+ |      +-------+---+-----+
+ |      |  count|  2|    2|
+ |      |    min|  2|Alice|
+ |      |    25%|  2| null|
+ |      |    75%|  5| null|
+ |      |    max|  5|  Bob|
+ |      +-------+---+-----+
+ |      
+ |      To do a summary for specific columns first select them:
+ |      
+ |      &gt;&gt;&gt; df.select(&#34;age&#34;, &#34;name&#34;).summary(&#34;count&#34;).show()
+ |      +-------+---+----+
+ |      |summary|age|name|
+ |      +-------+---+----+
+ |      |  count|  2|   2|
+ |      +-------+---+----+
+ |      
+ |      See also describe for basic statistics.
+ |      
+ |      .. versionadded:: 2.3.0
+ |  
+ |  tail(self, num)
+ |      Returns the last ``num`` rows as a :class:`list` of :class:`Row`.
+ |      
+ |      Running tail requires moving data into the application&#39;s driver process, and doing so with
+ |      a very large ``num`` can crash the driver process with OutOfMemoryError.
+ |      
+ |      &gt;&gt;&gt; df.tail(1)
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 3.0
+ |  
+ |  take(self, num)
+ |      Returns the first ``num`` rows as a :class:`list` of :class:`Row`.
+ |      
+ |      &gt;&gt;&gt; df.take(2)
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  toDF(self, *cols)
+ |      Returns a new :class:`DataFrame` that with new specified column names
+ |      
+ |      :param cols: list of new column names (string)
+ |      
+ |      &gt;&gt;&gt; df.toDF(&#39;f1&#39;, &#39;f2&#39;).collect()
+ |      [Row(f1=2, f2=&#39;Alice&#39;), Row(f1=5, f2=&#39;Bob&#39;)]
+ |  
+ |  toJSON(self, use_unicode=True)
+ |      Converts a :class:`DataFrame` into a :class:`RDD` of string.
+ |      
+ |      Each row is turned into a JSON document as one element in the returned RDD.
+ |      
+ |      &gt;&gt;&gt; df.toJSON().first()
+ |      &#39;{&#34;age&#34;:2,&#34;name&#34;:&#34;Alice&#34;}&#39;
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  toLocalIterator(self, prefetchPartitions=False)
+ |      Returns an iterator that contains all of the rows in this :class:`DataFrame`.
+ |      The iterator will consume as much memory as the largest partition in this
+ |      :class:`DataFrame`. With prefetch it may consume up to the memory of the 2 largest
+ |      partitions.
+ |      
+ |      :param prefetchPartitions: If Spark should pre-fetch the next partition
+ |                                 before it is needed.
+ |      
+ |      &gt;&gt;&gt; list(df.toLocalIterator())
+ |      [Row(age=2, name=&#39;Alice&#39;), Row(age=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  transform(self, func)
+ |      Returns a new :class:`DataFrame`. Concise syntax for chaining custom transformations.
+ |      
+ |      :param func: a function that takes and returns a :class:`DataFrame`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql.functions import col
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(1, 1.0), (2, 2.0)], [&#34;int&#34;, &#34;float&#34;])
+ |      &gt;&gt;&gt; def cast_all_to_int(input_df):
+ |      ...     return input_df.select([col(col_name).cast(&#34;int&#34;) for col_name in input_df.columns])
+ |      &gt;&gt;&gt; def sort_columns_asc(input_df):
+ |      ...     return input_df.select(*sorted(input_df.columns))
+ |      &gt;&gt;&gt; df.transform(cast_all_to_int).transform(sort_columns_asc).show()
+ |      +-----+---+
+ |      |float|int|
+ |      +-----+---+
+ |      |    1|  1|
+ |      |    2|  2|
+ |      +-----+---+
+ |      
+ |      .. versionadded:: 3.0
+ |  
+ |  union(self, other)
+ |      Return a new :class:`DataFrame` containing union of rows in this and another
+ |      :class:`DataFrame`.
+ |      
+ |      This is equivalent to `UNION ALL` in SQL. To do a SQL-style set union
+ |      (that does deduplication of elements), use this function followed by :func:`distinct`.
+ |      
+ |      Also as standard in SQL, this function resolves columns by position (not by name).
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  unionAll(self, other)
+ |      Return a new :class:`DataFrame` containing union of rows in this and another
+ |      :class:`DataFrame`.
+ |      
+ |      This is equivalent to `UNION ALL` in SQL. To do a SQL-style set union
+ |      (that does deduplication of elements), use this function followed by :func:`distinct`.
+ |      
+ |      Also as standard in SQL, this function resolves columns by position (not by name).
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  unionByName(self, other)
+ |      Returns a new :class:`DataFrame` containing union of rows in this and another
+ |      :class:`DataFrame`.
+ |      
+ |      This is different from both `UNION ALL` and `UNION DISTINCT` in SQL. To do a SQL-style set
+ |      union (that does deduplication of elements), use this function followed by :func:`distinct`.
+ |      
+ |      The difference between this function and :func:`union` is that this function
+ |      resolves columns by name (not by position):
+ |      
+ |      &gt;&gt;&gt; df1 = spark.createDataFrame([[1, 2, 3]], [&#34;col0&#34;, &#34;col1&#34;, &#34;col2&#34;])
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame([[4, 5, 6]], [&#34;col1&#34;, &#34;col2&#34;, &#34;col0&#34;])
+ |      &gt;&gt;&gt; df1.unionByName(df2).show()
+ |      +----+----+----+
+ |      |col0|col1|col2|
+ |      +----+----+----+
+ |      |   1|   2|   3|
+ |      |   6|   4|   5|
+ |      +----+----+----+
+ |      
+ |      .. versionadded:: 2.3
+ |  
+ |  unpersist(self, blocking=False)
+ |      Marks the :class:`DataFrame` as non-persistent, and remove all blocks for it from
+ |      memory and disk.
+ |      
+ |      .. note:: `blocking` default has changed to ``False`` to match Scala in 2.0.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  where = filter(self, condition)
+ |      :func:`where` is an alias for :func:`filter`.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  withColumn(self, colName, col)
+ |      Returns a new :class:`DataFrame` by adding a column or replacing the
+ |      existing column that has the same name.
+ |      
+ |      The column expression must be an expression over this :class:`DataFrame`; attempting to add
+ |      a column from some other :class:`DataFrame` will raise an error.
+ |      
+ |      :param colName: string, name of the new column.
+ |      :param col: a :class:`Column` expression for the new column.
+ |      
+ |      .. note:: This method introduces a projection internally. Therefore, calling it multiple
+ |          times, for instance, via loops in order to add multiple columns can generate big
+ |          plans which can cause performance issues and even `StackOverflowException`.
+ |          To avoid this, use :func:`select` with the multiple columns at once.
+ |      
+ |      &gt;&gt;&gt; df.withColumn(&#39;age2&#39;, df.age + 2).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;, age2=4), Row(age=5, name=&#39;Bob&#39;, age2=7)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  withColumnRenamed(self, existing, new)
+ |      Returns a new :class:`DataFrame` by renaming an existing column.
+ |      This is a no-op if schema doesn&#39;t contain the given column name.
+ |      
+ |      :param existing: string, name of the existing column to rename.
+ |      :param new: string, new name of the column.
+ |      
+ |      &gt;&gt;&gt; df.withColumnRenamed(&#39;age&#39;, &#39;age2&#39;).collect()
+ |      [Row(age2=2, name=&#39;Alice&#39;), Row(age2=5, name=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  withWatermark(self, eventTime, delayThreshold)
+ |      Defines an event time watermark for this :class:`DataFrame`. A watermark tracks a point
+ |      in time before which we assume no more late data is going to arrive.
+ |      
+ |      Spark will use this watermark for several purposes:
+ |        - To know when a given time window aggregation can be finalized and thus can be emitted
+ |          when using output modes that do not allow updates.
+ |      
+ |        - To minimize the amount of state that we need to keep for on-going aggregations.
+ |      
+ |      The current watermark is computed by looking at the `MAX(eventTime)` seen across
+ |      all of the partitions in the query minus a user specified `delayThreshold`.  Due to the cost
+ |      of coordinating this value across partitions, the actual watermark used is only guaranteed
+ |      to be at least `delayThreshold` behind the actual event time.  In some cases we may still
+ |      process records that arrive more than `delayThreshold` late.
+ |      
+ |      :param eventTime: the name of the column that contains the event time of the row.
+ |      :param delayThreshold: the minimum delay to wait to data to arrive late, relative to the
+ |          latest record that has been processed in the form of an interval
+ |          (e.g. &#34;1 minute&#34; or &#34;5 hours&#34;).
+ |      
+ |      .. note:: Evolving
+ |      
+ |      &gt;&gt;&gt; sdf.select(&#39;name&#39;, sdf.time.cast(&#39;timestamp&#39;)).withWatermark(&#39;time&#39;, &#39;10 minutes&#39;)
+ |      DataFrame[name: string, time: timestamp]
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |  
+ |  columns
+ |      Returns all column names as a list.
+ |      
+ |      &gt;&gt;&gt; df.columns
+ |      [&#39;age&#39;, &#39;name&#39;]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  dtypes
+ |      Returns all column names and their data types as a list.
+ |      
+ |      &gt;&gt;&gt; df.dtypes
+ |      [(&#39;age&#39;, &#39;int&#39;), (&#39;name&#39;, &#39;string&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  isStreaming
+ |      Returns ``True`` if this :class:`Dataset` contains one or more sources that continuously
+ |      return data as it arrives. A :class:`Dataset` that reads data from a streaming source
+ |      must be executed as a :class:`StreamingQuery` using the :func:`start` method in
+ |      :class:`DataStreamWriter`.  Methods that return a single answer, (e.g., :func:`count` or
+ |      :func:`collect`) will throw an :class:`AnalysisException` when there is a streaming
+ |      source present.
+ |      
+ |      .. note:: Evolving
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  na
+ |      Returns a :class:`DataFrameNaFunctions` for handling missing values.
+ |      
+ |      .. versionadded:: 1.3.1
+ |  
+ |  rdd
+ |      Returns the content as an :class:`pyspark.RDD` of :class:`Row`.
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  schema
+ |      Returns the schema of this :class:`DataFrame` as a :class:`pyspark.sql.types.StructType`.
+ |      
+ |      &gt;&gt;&gt; df.schema
+ |      StructType(List(StructField(age,IntegerType,true),StructField(name,StringType,true)))
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  stat
+ |      Returns a :class:`DataFrameStatFunctions` for statistic functions.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  storageLevel
+ |      Get the :class:`DataFrame`&#39;s current storage level.
+ |      
+ |      &gt;&gt;&gt; df.storageLevel
+ |      StorageLevel(False, False, False, False, 1)
+ |      &gt;&gt;&gt; df.cache().storageLevel
+ |      StorageLevel(True, True, False, True, 1)
+ |      &gt;&gt;&gt; df2.persist(StorageLevel.DISK_ONLY_2).storageLevel
+ |      StorageLevel(True, False, False, False, 2)
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  write
+ |      Interface for saving the content of the non-streaming :class:`DataFrame` out into external
+ |      storage.
+ |      
+ |      :return: :class:`DataFrameWriter`
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  writeStream
+ |      Interface for saving the content of the streaming :class:`DataFrame` out into external
+ |      storage.
+ |      
+ |      .. note:: Evolving.
+ |      
+ |      :return: :class:`DataStreamWriter`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from pyspark.sql.pandas.map_ops.PandasMapOpsMixin:
+ |  
+ |  mapInPandas(self, func, schema)
+ |      Maps an iterator of batches in the current :class:`DataFrame` using a Python native
+ |      function that takes and outputs a pandas DataFrame, and returns the result as a
+ |      :class:`DataFrame`.
+ |      
+ |      The function should take an iterator of `pandas.DataFrame`\s and return
+ |      another iterator of `pandas.DataFrame`\s. All columns are passed
+ |      together as an iterator of `pandas.DataFrame`\s to the function and the
+ |      returned iterator of `pandas.DataFrame`\s are combined as a :class:`DataFrame`.
+ |      Each `pandas.DataFrame` size can be controlled by
+ |      `spark.sql.execution.arrow.maxRecordsPerBatch`.
+ |      
+ |      :param func: a Python native function that takes an iterator of `pandas.DataFrame`\s, and
+ |          outputs an iterator of `pandas.DataFrame`\s.
+ |      :param schema: the return type of the `func` in PySpark. The value can be either a
+ |          :class:`pyspark.sql.types.DataType` object or a DDL-formatted type string.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql.functions import pandas_udf
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(1, 21), (2, 30)], (&#34;id&#34;, &#34;age&#34;))
+ |      &gt;&gt;&gt; def filter_func(iterator):
+ |      ...     for pdf in iterator:
+ |      ...         yield pdf[pdf.id == 1]
+ |      &gt;&gt;&gt; df.mapInPandas(filter_func, df.schema).show()  # doctest: +SKIP
+ |      +---+---+
+ |      | id|age|
+ |      +---+---+
+ |      |  1| 21|
+ |      +---+---+
+ |      
+ |      .. seealso:: :meth:`pyspark.sql.functions.pandas_udf`
+ |      
+ |      .. note:: Experimental
+ |      
+ |      .. versionadded:: 3.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from pyspark.sql.pandas.map_ops.PandasMapOpsMixin:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from pyspark.sql.pandas.conversion.PandasConversionMixin:
+ |  
+ |  toPandas(self)
+ |      Returns the contents of this :class:`DataFrame` as Pandas ``pandas.DataFrame``.
+ |      
+ |      This is only available if Pandas is installed and available.
+ |      
+ |      .. note:: This method should only be used if the resulting Pandas&#39;s :class:`DataFrame` is
+ |          expected to be small, as all the data is loaded into the driver&#39;s memory.
+ |      
+ |      .. note:: Usage with spark.sql.execution.arrow.pyspark.enabled=True is experimental.
+ |      
+ |      &gt;&gt;&gt; df.toPandas()  # doctest: +SKIP
+ |         age   name
+ |      0    2  Alice
+ |      1    5    Bob
+ |      
+ |      .. versionadded:: 1.3
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="c1"># 컬럼은 컬럼과의 비교 혹은 포함된 문자열을 다루는 contains 같은 함수를 사용합니다</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Help on Column in module pyspark.sql.column object:
+
+class Column(builtins.object)
+ |  Column(jc)
+ |  
+ |  A column in a DataFrame.
+ |  
+ |  :class:`Column` instances can be created by::
+ |  
+ |      # 1. Select a column out of a DataFrame
+ |  
+ |      df.colName
+ |      df[&#34;colName&#34;]
+ |  
+ |      # 2. Create from an expression
+ |      df.colName + 1
+ |      1 / df.colName
+ |  
+ |  .. versionadded:: 1.3
+ |  
+ |  Methods defined here:
+ |  
+ |  __add__ = _(self, other)
+ |      binary operator
+ |  
+ |  __and__ = _(self, other)
+ |      binary operator
+ |  
+ |  __bool__ = __nonzero__(self)
+ |  
+ |  __contains__(self, item)
+ |      # container operators
+ |  
+ |  __div__ = _(self, other)
+ |      binary operator
+ |  
+ |  __eq__ = _(self, other)
+ |      binary operator
+ |  
+ |  __ge__ = _(self, other)
+ |      binary operator
+ |  
+ |  __getattr__(self, item)
+ |  
+ |  __getitem__(self, k)
+ |  
+ |  __gt__ = _(self, other)
+ |      binary operator
+ |  
+ |  __init__(self, jc)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |  
+ |  __invert__ = _(self)
+ |  
+ |  __iter__(self)
+ |  
+ |  __le__ = _(self, other)
+ |      binary operator
+ |  
+ |  __lt__ = _(self, other)
+ |      binary operator
+ |  
+ |  __mod__ = _(self, other)
+ |      binary operator
+ |  
+ |  __mul__ = _(self, other)
+ |      binary operator
+ |  
+ |  __ne__ = _(self, other)
+ |      binary operator
+ |  
+ |  __neg__ = _(self)
+ |  
+ |  __nonzero__(self)
+ |  
+ |  __or__ = _(self, other)
+ |      binary operator
+ |  
+ |  __pow__ = _(self, other)
+ |      binary function
+ |  
+ |  __radd__ = _(self, other)
+ |      binary operator
+ |  
+ |  __rand__ = _(self, other)
+ |      binary operator
+ |  
+ |  __rdiv__ = _(self, other)
+ |      binary operator
+ |  
+ |  __repr__(self)
+ |      Return repr(self).
+ |  
+ |  __rmod__ = _(self, other)
+ |      binary operator
+ |  
+ |  __rmul__ = _(self, other)
+ |      binary operator
+ |  
+ |  __ror__ = _(self, other)
+ |      binary operator
+ |  
+ |  __rpow__ = _(self, other)
+ |      binary function
+ |  
+ |  __rsub__ = _(self, other)
+ |      binary operator
+ |  
+ |  __rtruediv__ = _(self, other)
+ |      binary operator
+ |  
+ |  __sub__ = _(self, other)
+ |      binary operator
+ |  
+ |  __truediv__ = _(self, other)
+ |      binary operator
+ |  
+ |  alias(self, *alias, **kwargs)
+ |      Returns this column aliased with a new name or names (in the case of expressions that
+ |      return more than one column, such as explode).
+ |      
+ |      :param alias: strings of desired column names (collects all positional arguments passed)
+ |      :param metadata: a dict of information to be stored in ``metadata`` attribute of the
+ |          corresponding :class:`StructField &lt;pyspark.sql.types.StructField&gt;` (optional, keyword
+ |          only argument)
+ |      
+ |      .. versionchanged:: 2.2
+ |         Added optional ``metadata`` argument.
+ |      
+ |      &gt;&gt;&gt; df.select(df.age.alias(&#34;age2&#34;)).collect()
+ |      [Row(age2=2), Row(age2=5)]
+ |      &gt;&gt;&gt; df.select(df.age.alias(&#34;age3&#34;, metadata={&#39;max&#39;: 99})).schema[&#39;age3&#39;].metadata[&#39;max&#39;]
+ |      99
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  asc = _(self)
+ |      Returns a sort expression based on ascending order of the column.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.asc()).collect()
+ |      [Row(name=&#39;Alice&#39;), Row(name=&#39;Tom&#39;)]
+ |  
+ |  asc_nulls_first = _(self)
+ |      Returns a sort expression based on ascending order of the column, and null values
+ |      return before non-null values.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (None, 60), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.asc_nulls_first()).collect()
+ |      [Row(name=None), Row(name=&#39;Alice&#39;), Row(name=&#39;Tom&#39;)]
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  asc_nulls_last = _(self)
+ |      Returns a sort expression based on ascending order of the column, and null values
+ |      appear after non-null values.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (None, 60), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.asc_nulls_last()).collect()
+ |      [Row(name=&#39;Alice&#39;), Row(name=&#39;Tom&#39;), Row(name=None)]
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  astype = cast(self, dataType)
+ |      :func:`astype` is an alias for :func:`cast`.
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  between(self, lowerBound, upperBound)
+ |      A boolean expression that is evaluated to true if the value of this
+ |      expression is between the given columns.
+ |      
+ |      &gt;&gt;&gt; df.select(df.name, df.age.between(2, 4)).show()
+ |      +-----+---------------------------+
+ |      | name|((age &gt;= 2) AND (age &lt;= 4))|
+ |      +-----+---------------------------+
+ |      |Alice|                       true|
+ |      |  Bob|                      false|
+ |      +-----+---------------------------+
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  bitwiseAND = _(self, other)
+ |      Compute bitwise AND of this expression with another expression.
+ |      
+ |      :param other: a value or :class:`Column` to calculate bitwise and(&amp;) against
+ |                    this :class:`Column`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(a=170, b=75)])
+ |      &gt;&gt;&gt; df.select(df.a.bitwiseAND(df.b)).collect()
+ |      [Row((a &amp; b)=10)]
+ |  
+ |  bitwiseOR = _(self, other)
+ |      Compute bitwise OR of this expression with another expression.
+ |      
+ |      :param other: a value or :class:`Column` to calculate bitwise or(|) against
+ |                    this :class:`Column`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(a=170, b=75)])
+ |      &gt;&gt;&gt; df.select(df.a.bitwiseOR(df.b)).collect()
+ |      [Row((a | b)=235)]
+ |  
+ |  bitwiseXOR = _(self, other)
+ |      Compute bitwise XOR of this expression with another expression.
+ |      
+ |      :param other: a value or :class:`Column` to calculate bitwise xor(^) against
+ |                    this :class:`Column`.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(a=170, b=75)])
+ |      &gt;&gt;&gt; df.select(df.a.bitwiseXOR(df.b)).collect()
+ |      [Row((a ^ b)=225)]
+ |  
+ |  cast(self, dataType)
+ |      Convert the column into type ``dataType``.
+ |      
+ |      &gt;&gt;&gt; df.select(df.age.cast(&#34;string&#34;).alias(&#39;ages&#39;)).collect()
+ |      [Row(ages=&#39;2&#39;), Row(ages=&#39;5&#39;)]
+ |      &gt;&gt;&gt; df.select(df.age.cast(StringType()).alias(&#39;ages&#39;)).collect()
+ |      [Row(ages=&#39;2&#39;), Row(ages=&#39;5&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  contains = _(self, other)
+ |      Contains the other element. Returns a boolean :class:`Column` based on a string match.
+ |      
+ |      :param other: string in line
+ |      
+ |      &gt;&gt;&gt; df.filter(df.name.contains(&#39;o&#39;)).collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |  
+ |  desc = _(self)
+ |      Returns a sort expression based on the descending order of the column.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.desc()).collect()
+ |      [Row(name=&#39;Tom&#39;), Row(name=&#39;Alice&#39;)]
+ |  
+ |  desc_nulls_first = _(self)
+ |      Returns a sort expression based on the descending order of the column, and null values
+ |      appear before non-null values.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (None, 60), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.desc_nulls_first()).collect()
+ |      [Row(name=None), Row(name=&#39;Tom&#39;), Row(name=&#39;Alice&#39;)]
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  desc_nulls_last = _(self)
+ |      Returns a sort expression based on the descending order of the column, and null values
+ |      appear after non-null values.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([(&#39;Tom&#39;, 80), (None, 60), (&#39;Alice&#39;, None)], [&#34;name&#34;, &#34;height&#34;])
+ |      &gt;&gt;&gt; df.select(df.name).orderBy(df.name.desc_nulls_last()).collect()
+ |      [Row(name=&#39;Tom&#39;), Row(name=&#39;Alice&#39;), Row(name=None)]
+ |      
+ |      .. versionadded:: 2.4
+ |  
+ |  endswith = _(self, other)
+ |      String ends with. Returns a boolean :class:`Column` based on a string match.
+ |      
+ |      :param other: string at end of line (do not use a regex `$`)
+ |      
+ |      &gt;&gt;&gt; df.filter(df.name.endswith(&#39;ice&#39;)).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.filter(df.name.endswith(&#39;ice$&#39;)).collect()
+ |      []
+ |  
+ |  eqNullSafe = _(self, other)
+ |      Equality test that is safe for null values.
+ |      
+ |      :param other: a value or :class:`Column`
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df1 = spark.createDataFrame([
+ |      ...     Row(id=1, value=&#39;foo&#39;),
+ |      ...     Row(id=2, value=None)
+ |      ... ])
+ |      &gt;&gt;&gt; df1.select(
+ |      ...     df1[&#39;value&#39;] == &#39;foo&#39;,
+ |      ...     df1[&#39;value&#39;].eqNullSafe(&#39;foo&#39;),
+ |      ...     df1[&#39;value&#39;].eqNullSafe(None)
+ |      ... ).show()
+ |      +-------------+---------------+----------------+
+ |      |(value = foo)|(value &lt;=&gt; foo)|(value &lt;=&gt; NULL)|
+ |      +-------------+---------------+----------------+
+ |      |         true|           true|           false|
+ |      |         null|          false|            true|
+ |      +-------------+---------------+----------------+
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame([
+ |      ...     Row(value = &#39;bar&#39;),
+ |      ...     Row(value = None)
+ |      ... ])
+ |      &gt;&gt;&gt; df1.join(df2, df1[&#34;value&#34;] == df2[&#34;value&#34;]).count()
+ |      0
+ |      &gt;&gt;&gt; df1.join(df2, df1[&#34;value&#34;].eqNullSafe(df2[&#34;value&#34;])).count()
+ |      1
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame([
+ |      ...     Row(id=1, value=float(&#39;NaN&#39;)),
+ |      ...     Row(id=2, value=42.0),
+ |      ...     Row(id=3, value=None)
+ |      ... ])
+ |      &gt;&gt;&gt; df2.select(
+ |      ...     df2[&#39;value&#39;].eqNullSafe(None),
+ |      ...     df2[&#39;value&#39;].eqNullSafe(float(&#39;NaN&#39;)),
+ |      ...     df2[&#39;value&#39;].eqNullSafe(42.0)
+ |      ... ).show()
+ |      +----------------+---------------+----------------+
+ |      |(value &lt;=&gt; NULL)|(value &lt;=&gt; NaN)|(value &lt;=&gt; 42.0)|
+ |      +----------------+---------------+----------------+
+ |      |           false|           true|           false|
+ |      |           false|          false|            true|
+ |      |            true|          false|           false|
+ |      +----------------+---------------+----------------+
+ |      
+ |      .. note:: Unlike Pandas, PySpark doesn&#39;t consider NaN values to be NULL.
+ |         See the `NaN Semantics`_ for details.
+ |      .. _NaN Semantics:
+ |         https://spark.apache.org/docs/latest/sql-programming-guide.html#nan-semantics
+ |      .. versionadded:: 2.3.0
+ |  
+ |  getField(self, name)
+ |      An expression that gets a field by name in a StructField.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(r=Row(a=1, b=&#34;b&#34;))])
+ |      &gt;&gt;&gt; df.select(df.r.getField(&#34;b&#34;)).show()
+ |      +---+
+ |      |r.b|
+ |      +---+
+ |      |  b|
+ |      +---+
+ |      &gt;&gt;&gt; df.select(df.r.a).show()
+ |      +---+
+ |      |r.a|
+ |      +---+
+ |      |  1|
+ |      +---+
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  getItem(self, key)
+ |      An expression that gets an item at position ``ordinal`` out of a list,
+ |      or gets an item by key out of a dict.
+ |      
+ |      &gt;&gt;&gt; df = spark.createDataFrame([([1, 2], {&#34;key&#34;: &#34;value&#34;})], [&#34;l&#34;, &#34;d&#34;])
+ |      &gt;&gt;&gt; df.select(df.l.getItem(0), df.d.getItem(&#34;key&#34;)).show()
+ |      +----+------+
+ |      |l[0]|d[key]|
+ |      +----+------+
+ |      |   1| value|
+ |      +----+------+
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  isNotNull = _(self)
+ |      True if the current expression is NOT null.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(name=&#39;Tom&#39;, height=80), Row(name=&#39;Alice&#39;, height=None)])
+ |      &gt;&gt;&gt; df.filter(df.height.isNotNull()).collect()
+ |      [Row(height=80, name=&#39;Tom&#39;)]
+ |  
+ |  isNull = _(self)
+ |      True if the current expression is null.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; df = spark.createDataFrame([Row(name=&#39;Tom&#39;, height=80), Row(name=&#39;Alice&#39;, height=None)])
+ |      &gt;&gt;&gt; df.filter(df.height.isNull()).collect()
+ |      [Row(height=None, name=&#39;Alice&#39;)]
+ |  
+ |  isin(self, *cols)
+ |      A boolean expression that is evaluated to true if the value of this
+ |      expression is contained by the evaluated values of the arguments.
+ |      
+ |      &gt;&gt;&gt; df[df.name.isin(&#34;Bob&#34;, &#34;Mike&#34;)].collect()
+ |      [Row(age=5, name=&#39;Bob&#39;)]
+ |      &gt;&gt;&gt; df[df.age.isin([1, 2, 3])].collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      
+ |      .. versionadded:: 1.5
+ |  
+ |  like = _(self, other)
+ |      SQL like expression. Returns a boolean :class:`Column` based on a SQL LIKE match.
+ |      
+ |      :param other: a SQL LIKE pattern
+ |      
+ |      See :func:`rlike` for a regex version
+ |      
+ |      &gt;&gt;&gt; df.filter(df.name.like(&#39;Al%&#39;)).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |  
+ |  name = alias(self, *alias, **kwargs)
+ |      :func:`name` is an alias for :func:`alias`.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  otherwise(self, value)
+ |      Evaluates a list of conditions and returns one of multiple possible result expressions.
+ |      If :func:`Column.otherwise` is not invoked, None is returned for unmatched conditions.
+ |      
+ |      See :func:`pyspark.sql.functions.when` for example usage.
+ |      
+ |      :param value: a literal value, or a :class:`Column` expression.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import functions as F
+ |      &gt;&gt;&gt; df.select(df.name, F.when(df.age &gt; 3, 1).otherwise(0)).show()
+ |      +-----+-------------------------------------+
+ |      | name|CASE WHEN (age &gt; 3) THEN 1 ELSE 0 END|
+ |      +-----+-------------------------------------+
+ |      |Alice|                                    0|
+ |      |  Bob|                                    1|
+ |      +-----+-------------------------------------+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  over(self, window)
+ |      Define a windowing column.
+ |      
+ |      :param window: a :class:`WindowSpec`
+ |      :return: a Column
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Window
+ |      &gt;&gt;&gt; window = Window.partitionBy(&#34;name&#34;).orderBy(&#34;age&#34;)                 .rowsBetween(Window.unboundedPreceding, Window.currentRow)
+ |      &gt;&gt;&gt; from pyspark.sql.functions import rank, min
+ |      &gt;&gt;&gt; from pyspark.sql.functions import desc
+ |      &gt;&gt;&gt; df.withColumn(&#34;rank&#34;, rank().over(window))                 .withColumn(&#34;min&#34;, min(&#39;age&#39;).over(window)).sort(desc(&#34;age&#34;)).show()
+ |      +---+-----+----+---+
+ |      |age| name|rank|min|
+ |      +---+-----+----+---+
+ |      |  5|  Bob|   1|  5|
+ |      |  2|Alice|   1|  2|
+ |      +---+-----+----+---+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  rlike = _(self, other)
+ |      SQL RLIKE expression (LIKE with Regex). Returns a boolean :class:`Column` based on a regex
+ |      match.
+ |      
+ |      :param other: an extended regex expression
+ |      
+ |      &gt;&gt;&gt; df.filter(df.name.rlike(&#39;ice$&#39;)).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |  
+ |  startswith = _(self, other)
+ |      String starts with. Returns a boolean :class:`Column` based on a string match.
+ |      
+ |      :param other: string at start of line (do not use a regex `^`)
+ |      
+ |      &gt;&gt;&gt; df.filter(df.name.startswith(&#39;Al&#39;)).collect()
+ |      [Row(age=2, name=&#39;Alice&#39;)]
+ |      &gt;&gt;&gt; df.filter(df.name.startswith(&#39;^Al&#39;)).collect()
+ |      []
+ |  
+ |  substr(self, startPos, length)
+ |      Return a :class:`Column` which is a substring of the column.
+ |      
+ |      :param startPos: start position (int or Column)
+ |      :param length:  length of the substring (int or Column)
+ |      
+ |      &gt;&gt;&gt; df.select(df.name.substr(1, 3).alias(&#34;col&#34;)).collect()
+ |      [Row(col=&#39;Ali&#39;), Row(col=&#39;Bob&#39;)]
+ |      
+ |      .. versionadded:: 1.3
+ |  
+ |  when(self, condition, value)
+ |      Evaluates a list of conditions and returns one of multiple possible result expressions.
+ |      If :func:`Column.otherwise` is not invoked, None is returned for unmatched conditions.
+ |      
+ |      See :func:`pyspark.sql.functions.when` for example usage.
+ |      
+ |      :param condition: a boolean :class:`Column` expression.
+ |      :param value: a literal value, or a :class:`Column` expression.
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import functions as F
+ |      &gt;&gt;&gt; df.select(df.name, F.when(df.age &gt; 4, 1).when(df.age &lt; 3, -1).otherwise(0)).show()
+ |      +-----+------------------------------------------------------------+
+ |      | name|CASE WHEN (age &gt; 4) THEN 1 WHEN (age &lt; 3) THEN -1 ELSE 0 END|
+ |      +-----+------------------------------------------------------------+
+ |      |Alice|                                                          -1|
+ |      |  Bob|                                                           1|
+ |      +-----+------------------------------------------------------------+
+ |      
+ |      .. versionadded:: 1.4
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __hash__ = None
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14471,7 +16714,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">log_access</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/log_access.csv&quot;</span><span class="p">)</span>
@@ -14539,7 +16782,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">log_access</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/log_access.csv&quot;</span><span class="p">)</span>
@@ -14606,7 +16849,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">log_access</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/log_access.csv&quot;</span><span class="p">)</span>
@@ -14680,7 +16923,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[34]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">unix_timestamp</span><span class="p">,</span> <span class="n">from_unixtime</span><span class="p">,</span> <span class="n">to_timestamp</span><span class="p">,</span> <span class="n">to_date</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">lit</span>
@@ -14741,7 +16984,7 @@ only showing top 5 rows
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># SQL Expression 통한 구문</span>
@@ -14796,7 +17039,7 @@ only showing top 5 rows
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -14865,7 +17108,7 @@ only showing top 5 rows
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">json</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s2">&quot;data/activity-data&quot;</span><span class="p">)</span>
@@ -14919,7 +17162,7 @@ only showing top 5 rows
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[38]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">users</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">)</span>
@@ -14970,7 +17213,7 @@ only showing top 5 rows
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 스키마 확인 - 3가지 모두 동일한 결과를 얻을 수 있으며 편한 방식을 선택하시면 됩니다</span>
@@ -15027,6 +17270,419 @@ root
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="5.-&#49828;&#54028;&#53356;-&#50528;&#54540;&#47532;&#52992;&#51060;&#49496;&#51032;-&#44060;&#45392;-&#51060;&#54644;">5. &#49828;&#54028;&#53356; &#50528;&#54540;&#47532;&#52992;&#51060;&#49496;&#51032; &#44060;&#45392; &#51060;&#54644;<a class="anchor-link" href="#5.-&#49828;&#54028;&#53356;-&#50528;&#54540;&#47532;&#52992;&#51060;&#49496;&#51032;-&#44060;&#45392;-&#51060;&#54644;">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="&#49828;&#54028;&#53356;&#50640;&#49436;-&#48152;&#46300;&#49884;-&#50508;&#50500;&#50556;-&#54624;-&#44061;&#52404;&#50752;-&#44060;&#45392;">&#49828;&#54028;&#53356;&#50640;&#49436; &#48152;&#46300;&#49884; &#50508;&#50500;&#50556; &#54624; &#44061;&#52404;&#50752; &#44060;&#45392;<a class="anchor-link" href="#&#49828;&#54028;&#53356;&#50640;&#49436;-&#48152;&#46300;&#49884;-&#50508;&#50500;&#50556;-&#54624;-&#44061;&#52404;&#50752;-&#44060;&#45392;">&#182;</a></h3><table>
+<thead><tr>
+<th>구분</th>
+<th>설명</th>
+<th>기타</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>스파크 프레임워크를 통해 빌드한 프로그램. 전체 작업을 관리하는 Driver 와 Executors 상에서 수행되는 프로그램으로 구분합니다</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SparkSession</td>
+<td>스파크의 모든 기능을 사용하기 위해 생성하는 객체</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Job</td>
+<td>하나의 액션(save, collect 등)을 수행하기 위해 여러개의 타스크로 구성된 병렬처리 단위</td>
+<td>DAG 혹은 Spark Execution Plan</td>
+</tr>
+<tr>
+<td>Stage</td>
+<td>하나의 잡은 다수의 스테이지라는 것으로 구성되며, 하나의 스테이지는 다수의 타스크 들로 구성됩니다</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>스파크 익스큐터에 보내지는 하나의 작업 단위</td>
+<td>하나의 Core 혹은 Partition 단위의 작업</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#49828;&#54028;&#53356;&#51032;-&#48320;&#54872;(Transformation)&#44284;-&#50529;&#49496;(Action)">&#49828;&#54028;&#53356;&#51032; &#48320;&#54872;(Transformation)&#44284; &#50529;&#49496;(Action)<a class="anchor-link" href="#&#49828;&#54028;&#53356;&#51032;-&#48320;&#54872;(Transformation)&#44284;-&#50529;&#49496;(Action)">&#182;</a></h3><table>
+<thead><tr>
+<th>구분</th>
+<th>설명</th>
+<th>기타</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transformation</td>
+<td>원본 데이터의 변경 없이 새로운 데이터프레임을 생성하는 모든 작업을 말하며 모든 변환 작업들은 lazily evaluated 되며 lineage 를 유지합니다</td>
+<td>select, filter, join, groupBy, orderBy</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>여태까지 지연된 변환 작업을 트리거링하는 동작을 말하며, 데이터의 조회 및 저장 등의 작업을 말합니다</td>
+<td>show, take, count, collect, save</td>
+</tr>
+</tbody>
+</table>
+<blockquote><p>Lineage : 연속된 변환 파이프라인이 액션을 만나기 전까지의 모든 이력 혹은 히스토리 정보를 모두 저장하고 있는 객체를 말하며, 스파크는 이렇게 체인을 구성한 변환 작업을 통해 <strong>쿼리 최적화</strong>를 수행할 수 있으며, 데이터 불변성(Immutability)를 통해서 <strong>내결함성(Fault Tolerance)</strong>을 가질 수 있습니다.</p>
+</blockquote>
+<h3 id="&#51329;&#51008;-&#48320;&#54872;&#44284;-&#45331;&#51008;-&#48320;&#54872;---Narrow-and-Wide-Transformation">&#51329;&#51008; &#48320;&#54872;&#44284; &#45331;&#51008; &#48320;&#54872; - Narrow and Wide Transformation<a class="anchor-link" href="#&#51329;&#51008;-&#48320;&#54872;&#44284;-&#45331;&#51008;-&#48320;&#54872;---Narrow-and-Wide-Transformation">&#182;</a></h3><blockquote><p>위에서 언급한 최적화(Optimization) 과정은 여러 오퍼레이션들을 다시 여러 스테이지로 쪼개고, 이러한 스테이지 들이 셔플링이 필요한지, 클러스터간의 데이터 교환이 필요한지 등을 결정하는 문제이며, 변환 작업은 크게 하나의 파티션 내에 수행이 가능한 <strong>좁은 의존성(narrow dependencies)</strong> 과 셔플링이 발생하여 클러스터 전체에 데이터 교환이 필요한 <strong>넓은 의존성(wide dependencies)</strong> 두 가지로 구분합니다</p>
+</blockquote>
+<p><img src="images/transformation.png" alt="Transformation"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="6.-&#49828;&#54028;&#53356;-UI">6. &#49828;&#54028;&#53356; UI<a class="anchor-link" href="#6.-&#49828;&#54028;&#53356;-UI">&#182;</a></h2><blockquote><p>Default 포트는 4040 이므로 <a href="http://localhost:4040">http://localhost:4040</a> 에 접속하여 앞에서 배웠던 Narrow, Wide Transformation DAG를 확인합니다</p>
+</blockquote>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[40]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Narrow Transformation</span>
+<span class="n">strings</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;../requirements.txt&quot;</span><span class="p">)</span>
+<span class="n">jupyter</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;jupyter&quot;</span><span class="p">))</span>
+<span class="n">jupyter</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+---------------------------------+
+|value                            |
++---------------------------------+
+|jupyter_contrib_nbextensions     |
+|jupyter_nbextensions_configurator|
++---------------------------------+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[41]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Wide Transformation</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/tbl_user.csv&quot;</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;u_gender&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">count</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------+-----+
+|u_gender|count|
++--------+-----+
+|여      |3    |
+|남      |6    |
++--------+-----+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<table>
+<thead><tr>
+<th>Narrow</th>
+<th>Wide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="images/narrow.png" alt="narrow"></td>
+<td><img src="images/wide.png" alt="wide"></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.-M&amp;M-&#52488;&#53084;&#47131;-&#48516;&#47448;-&#50696;&#51228;">7. M&amp;M &#52488;&#53084;&#47131; &#48516;&#47448; &#50696;&#51228;<a class="anchor-link" href="#7.-M&amp;M-&#52488;&#53084;&#47131;-&#48516;&#47448;-&#50696;&#51228;">&#182;</a></h2><blockquote><p><a href="https://github.com/psyoblade/LearningSparkV2?organization=psyoblade&amp;organization=psyoblade">Learning Spark 2nd Edition</a> 에서 제공하는 data bricks dataset 예제 가운데 미국의 주 별 M&amp;M 초콜렛 판매량을 집계하는 예제를 작성합니다</p>
+</blockquote>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[42]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnm_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/databricks/mnm_dataset.csv&quot;</span><span class="p">)</span>
+<span class="n">mnm_df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<span class="n">mnm_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>root
+ |-- State: string (nullable = true)
+ |-- Color: string (nullable = true)
+ |-- Count: integer (nullable = true)
+
++-----+------+-----+
+|State|Color |Count|
++-----+------+-----+
+|TX   |Red   |20   |
+|NV   |Blue  |66   |
+|CO   |Blue  |79   |
+|OR   |Blue  |71   |
+|WA   |Yellow|93   |
+|WY   |Blue  |16   |
+|CA   |Yellow|53   |
+|WA   |Green |60   |
+|OR   |Green |71   |
+|TX   |Green |68   |
+|NV   |Green |59   |
+|AZ   |Brown |95   |
+|WA   |Yellow|20   |
+|AZ   |Blue  |75   |
+|OR   |Brown |72   |
+|NV   |Red   |98   |
+|WY   |Orange|45   |
+|CO   |Blue  |52   |
+|TX   |Brown |94   |
+|CO   |Red   |82   |
++-----+------+-----+
+only showing top 20 rows
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[43]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># We use the DataFrame high-level APIs. Note</span>
+<span class="c1"># that we don&#39;t use RDDs at all. Because some of Spark&#39;s</span>
+<span class="c1"># functions return the same object, we can chain function calls.</span>
+<span class="c1"># 1. Select from the DataFrame the fields &quot;State&quot;, &quot;Color&quot;, and &quot;Count&quot;</span>
+<span class="c1"># 2. Since we want to group each state and its M&amp;M color count,</span>
+<span class="c1"># we use groupBy()</span>
+<span class="c1"># 3. Aggregate counts of all colors and groupBy() State and Color</span>
+<span class="c1"># 4 orderBy() in descending order</span>
+<span class="n">count_mnm_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">mnm_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">)</span> \
+<span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">)</span> \
+<span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;Total&quot;</span><span class="p">))</span> \
+<span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;Total&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="c1"># Show the resulting aggregations for all the states and colors;</span>
+<span class="c1"># a total count of each color per state.</span>
+<span class="c1"># Note show() is an action, which will trigger the above</span>
+<span class="c1"># query to be executed.</span>
+<span class="n">count_mnm_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total Rows = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">count_mnm_df</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+
+<span class="c1"># While the above code aggregated and counted for all</span>
+<span class="c1"># the states, what if we just want to see the data for</span>
+<span class="c1"># a single state, e.g., CA?</span>
+<span class="c1"># 1. Select from all rows in the DataFrame</span>
+<span class="c1"># 2. Filter only CA state</span>
+<span class="c1"># 3. groupBy() State and Color as we did above</span>
+<span class="c1"># 4. Aggregate the counts for each color</span>
+<span class="c1"># 5. orderBy() in descending order</span>
+<span class="c1"># Find the aggregate count for California by filtering</span>
+<span class="n">ca_count_mnm_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">mnm_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">)</span> \
+<span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mnm_df</span><span class="o">.</span><span class="n">State</span> <span class="o">==</span> <span class="s2">&quot;CA&quot;</span><span class="p">)</span> \
+<span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">)</span> \
+<span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;Total&quot;</span><span class="p">))</span> \
+<span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;Total&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="c1"># Show the resulting aggregation for California.</span>
+<span class="c1"># As above, show() is an action that will trigger the execution of the</span>
+<span class="c1"># entire computation.</span>
+<span class="n">ca_count_mnm_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Stop the SparkSession</span>
+<span class="c1"># spark.stop()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+-----+------+-----+
+|State|Color |Total|
++-----+------+-----+
+|CA   |Yellow|1807 |
+|WA   |Green |1779 |
+|OR   |Orange|1743 |
+|TX   |Green |1737 |
+|TX   |Red   |1725 |
+|CA   |Green |1723 |
+|CO   |Yellow|1721 |
+|CA   |Brown |1718 |
+|CO   |Green |1713 |
+|NV   |Orange|1712 |
+|TX   |Yellow|1703 |
+|NV   |Green |1698 |
+|AZ   |Brown |1698 |
+|CO   |Blue  |1695 |
+|WY   |Green |1695 |
+|NM   |Red   |1690 |
+|AZ   |Orange|1689 |
+|NM   |Yellow|1688 |
+|NM   |Brown |1687 |
+|UT   |Orange|1684 |
+|NM   |Green |1682 |
+|UT   |Red   |1680 |
+|AZ   |Green |1676 |
+|NV   |Yellow|1675 |
+|NV   |Blue  |1673 |
+|WA   |Red   |1671 |
+|WY   |Red   |1670 |
+|WA   |Brown |1669 |
+|NM   |Orange|1665 |
+|WY   |Blue  |1664 |
+|WA   |Yellow|1663 |
+|WA   |Orange|1658 |
+|NV   |Brown |1657 |
+|CA   |Orange|1657 |
+|CO   |Brown |1656 |
+|CA   |Red   |1656 |
+|UT   |Blue  |1655 |
+|AZ   |Yellow|1654 |
+|TX   |Orange|1652 |
+|AZ   |Red   |1648 |
+|OR   |Blue  |1646 |
+|UT   |Yellow|1645 |
+|OR   |Red   |1645 |
+|CO   |Orange|1642 |
+|TX   |Brown |1641 |
+|NM   |Blue  |1638 |
+|AZ   |Blue  |1636 |
+|OR   |Green |1634 |
+|UT   |Brown |1631 |
+|WY   |Yellow|1626 |
+|WA   |Blue  |1625 |
+|CO   |Red   |1624 |
+|OR   |Brown |1621 |
+|TX   |Blue  |1614 |
+|OR   |Yellow|1614 |
+|NV   |Red   |1610 |
+|CA   |Blue  |1603 |
+|WY   |Orange|1595 |
+|UT   |Green |1591 |
+|WY   |Brown |1532 |
++-----+------+-----+
+
+Total Rows = 60
++-----+------+-----+
+|State|Color |Total|
++-----+------+-----+
+|CA   |Yellow|1807 |
+|CA   |Green |1723 |
+|CA   |Brown |1718 |
+|CA   |Orange|1657 |
+|CA   |Red   |1656 |
+|CA   |Blue  |1603 |
++-----+------+-----+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="8.-&#49892;&#49845;&#47928;&#51228;">8. &#49892;&#49845;&#47928;&#51228;<a class="anchor-link" href="#8.-&#49892;&#49845;&#47928;&#51228;">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="&#49892;&#49845;#1.-data/tbl_user.csv-&#54028;&#51068;&#51012;-&#51069;&#44256;,-&#50732;&#48148;&#47480;-&#45936;&#51060;&#53552;-&#53440;&#51077;&#51012;-&#52628;&#51221;&#54624;-&#49688;-&#51080;&#46020;&#47197;-&#50741;&#49496;&#51012;-&#51452;&#50612;-&#45936;&#51060;&#53552;&#47484;-&#51069;&#44256;,-&#54644;&#45817;-&#49828;&#53412;&#47560;&#47484;-&#52636;&#47141;&#54616;&#49464;&#50836;">&#49892;&#49845;#1. data/tbl_user.csv &#54028;&#51068;&#51012; &#51069;&#44256;, &#50732;&#48148;&#47480; &#45936;&#51060;&#53552; &#53440;&#51077;&#51012; &#52628;&#51221;&#54624; &#49688; &#51080;&#46020;&#47197; &#50741;&#49496;&#51012; &#51452;&#50612; &#45936;&#51060;&#53552;&#47484; &#51069;&#44256;, &#54644;&#45817; &#49828;&#53412;&#47560;&#47484; &#52636;&#47141;&#54616;&#49464;&#50836;<a class="anchor-link" href="#&#49892;&#49845;#1.-data/tbl_user.csv-&#54028;&#51068;&#51012;-&#51069;&#44256;,-&#50732;&#48148;&#47480;-&#45936;&#51060;&#53552;-&#53440;&#51077;&#51012;-&#52628;&#51221;&#54624;-&#49688;-&#51080;&#46020;&#47197;-&#50741;&#49496;&#51012;-&#51452;&#50612;-&#45936;&#51060;&#53552;&#47484;-&#51069;&#44256;,-&#54644;&#45817;-&#49828;&#53412;&#47560;&#47484;-&#52636;&#47141;&#54616;&#49464;&#50836;">&#182;</a></h3><blockquote><p>참고 : printSchema()</p>
 </blockquote>
 
@@ -15034,7 +17690,7 @@ root
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/tbl_user.csv&quot;</span><span class="p">)</span>
@@ -15082,7 +17738,7 @@ root
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">purchase</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/tbl_purchase.csv&quot;</span><span class="p">)</span>
@@ -15117,6 +17773,875 @@ root
 |1603665955|5    |2004|LG Gram    |3500000 |2020-10-26 07:45:55                                       |
 |1603666155|5    |2004|LG TV      |2500000 |2020-10-26 07:49:15                                       |
 +----------+-----+----+-----------+--------+----------------------------------------------------------+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="9.-&#51656;&#47928;&#44284;-&#45813;&#48320;">9. &#51656;&#47928;&#44284; &#45813;&#48320;<a class="anchor-link" href="#9.-&#51656;&#47928;&#44284;-&#45813;&#48320;">&#182;</a></h2><h3 id="Q1.-&#54616;&#45208;&#51032;-&#47932;&#47532;&#51201;&#51064;-&#51109;&#48708;-&#54841;&#51008;-JVM-&#50948;&#50640;&#49436;-&#50668;&#47084;&#44060;&#51032;-SparkSession-&#49892;&#54665;&#51060;-&#44032;&#45733;&#54620;&#44032;?">Q1. &#54616;&#45208;&#51032; &#47932;&#47532;&#51201;&#51064; &#51109;&#48708; &#54841;&#51008; JVM &#50948;&#50640;&#49436; &#50668;&#47084;&#44060;&#51032; SparkSession &#49892;&#54665;&#51060; &#44032;&#45733;&#54620;&#44032;?<a class="anchor-link" href="#Q1.-&#54616;&#45208;&#51032;-&#47932;&#47532;&#51201;&#51064;-&#51109;&#48708;-&#54841;&#51008;-JVM-&#50948;&#50640;&#49436;-&#50668;&#47084;&#44060;&#51032;-SparkSession-&#49892;&#54665;&#51060;-&#44032;&#45733;&#54620;&#44032;?">&#182;</a></h3><blockquote><p><a href="https://medium.com/@achilleus/spark-session-10d0d66d1d24">A tale of Spark Session and Spark Context</a> 페이지를 통해 다수 세션을 생성하는 예제를 통해 이해할 수 있습니다. Spark 2.0 이전에는 Spark Context, Hive Context, SQL Context 등 다양한 기능을 별도의 컨텍스트 객체를 통해 사용할 수 있었지만, 2.0 이후부터는 SparkSession 이라는 통합된 객체를 통해 접근 및 사용할 수 있습니다.</p>
+</blockquote>
+<h3 id="A1.-Spark-Session-builder-&#50741;&#49496;&#51012;-&#53685;&#54644;-&#54616;&#45208;&#51032;-JVM-&#50640;&#49436;-&#45796;&#49688;&#51032;-&#52968;&#53581;&#49828;&#53944;-&#49373;&#49457;&#51008;-&#44032;&#45733;&#54616;&#51648;&#47564;,-&#51339;&#51648;-&#50506;&#51008;-&#48169;&#48277;">A1. Spark Session builder &#50741;&#49496;&#51012; &#53685;&#54644; &#54616;&#45208;&#51032; JVM &#50640;&#49436; &#45796;&#49688;&#51032; &#52968;&#53581;&#49828;&#53944; &#49373;&#49457;&#51008; &#44032;&#45733;&#54616;&#51648;&#47564;, &#51339;&#51648; &#50506;&#51008; &#48169;&#48277;<a class="anchor-link" href="#A1.-Spark-Session-builder-&#50741;&#49496;&#51012;-&#53685;&#54644;-&#54616;&#45208;&#51032;-JVM-&#50640;&#49436;-&#45796;&#49688;&#51032;-&#52968;&#53581;&#49828;&#53944;-&#49373;&#49457;&#51008;-&#44032;&#45733;&#54616;&#51648;&#47564;,-&#51339;&#51648;-&#50506;&#51008;-&#48169;&#48277;">&#182;</a></h3><ul>
+<li>enableHiveSuppoort : 기존의 <a href="https://spark.apache.org/docs/3.0.0-preview/sql-migration-guide.html#upgrading-from-spark-sql-24-to-30">SQLContext, HiveContext</a> 대신 catalog 인터페이스를 통해 Metastore, SerDe 및 UDFs 등을 사용을 활성화 하며, 테이블 생성 및 조회가 가능합니다</li>
+<li>getOrCreate : 이미 존재한다면 기존의 객체를 사용하고, 그렇지 않은 경우에만 생성합니다<ul>
+<li>하나의 스파크 노트북 환경을 다수의 유저가 사용</li>
+</ul>
+</li>
+<li>"spark.driver.allowMultipleContexts" 설정을 true 로 하여 가능하지만, 하나의 JVM 상에서 여러개의 Spark Context 를 유지하는 것은 위험할 수 있습니다</li>
+</ul>
+<h3 id="A1.-SparkSession.newSession()-&#47749;&#47161;&#51012;-&#53685;&#54644;-SparkContext-&#45716;-&#46041;&#51068;&#54616;&#46104;,-&#49444;&#51221;&#51221;&#48372;&#47564;-&#48324;&#46020;&#47196;-&#50976;&#51648;&#54624;-&#49688;-&#51080;&#49845;&#45768;&#45796;">A1. SparkSession.newSession() &#47749;&#47161;&#51012; &#53685;&#54644; SparkContext &#45716; &#46041;&#51068;&#54616;&#46104;, &#49444;&#51221;&#51221;&#48372;&#47564; &#48324;&#46020;&#47196; &#50976;&#51648;&#54624; &#49688; &#51080;&#49845;&#45768;&#45796;<a class="anchor-link" href="#A1.-SparkSession.newSession()-&#47749;&#47161;&#51012;-&#53685;&#54644;-SparkContext-&#45716;-&#46041;&#51068;&#54616;&#46104;,-&#49444;&#51221;&#51221;&#48372;&#47564;-&#48324;&#46020;&#47196;-&#50976;&#51648;&#54624;-&#49688;-&#51080;&#49845;&#45768;&#45796;">&#182;</a></h3><ul>
+<li>아래와 같이 2개의 세션을 생성하고, 개별 conf 설정을 통해 2가지 세션을 유지할 수 있습니다.</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[46]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Help on SparkSession in module pyspark.sql.session object:
+
+class SparkSession(pyspark.sql.pandas.conversion.SparkConversionMixin)
+ |  SparkSession(sparkContext, jsparkSession=None)
+ |  
+ |  The entry point to programming Spark with the Dataset and DataFrame API.
+ |  
+ |  A SparkSession can be used create :class:`DataFrame`, register :class:`DataFrame` as
+ |  tables, execute SQL over tables, cache tables, and read parquet files.
+ |  To create a SparkSession, use the following builder pattern:
+ |  
+ |  &gt;&gt;&gt; spark = SparkSession.builder \
+ |  ...     .master(&#34;local&#34;) \
+ |  ...     .appName(&#34;Word Count&#34;) \
+ |  ...     .config(&#34;spark.some.config.option&#34;, &#34;some-value&#34;) \
+ |  ...     .getOrCreate()
+ |  
+ |  .. autoattribute:: builder
+ |     :annotation:
+ |  
+ |  Method resolution order:
+ |      SparkSession
+ |      pyspark.sql.pandas.conversion.SparkConversionMixin
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __enter__(self)
+ |      Enable &#39;with SparkSession.builder.(...).getOrCreate() as session: app&#39; syntax.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  __exit__(self, exc_type, exc_val, exc_tb)
+ |      Enable &#39;with SparkSession.builder.(...).getOrCreate() as session: app&#39; syntax.
+ |      
+ |      Specifically stop the SparkSession on exit of the with block.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  __init__(self, sparkContext, jsparkSession=None)
+ |      Creates a new SparkSession.
+ |      
+ |      &gt;&gt;&gt; from datetime import datetime
+ |      &gt;&gt;&gt; spark = SparkSession(sc)
+ |      &gt;&gt;&gt; allTypes = sc.parallelize([Row(i=1, s=&#34;string&#34;, d=1.0, l=1,
+ |      ...     b=True, list=[1, 2, 3], dict={&#34;s&#34;: 0}, row=Row(a=1),
+ |      ...     time=datetime(2014, 8, 1, 14, 1, 5))])
+ |      &gt;&gt;&gt; df = allTypes.toDF()
+ |      &gt;&gt;&gt; df.createOrReplaceTempView(&#34;allTypes&#34;)
+ |      &gt;&gt;&gt; spark.sql(&#39;select i+1, d+1, not b, list[1], dict[&#34;s&#34;], time, row.a &#39;
+ |      ...            &#39;from allTypes where b and i &gt; 0&#39;).collect()
+ |      [Row((i + CAST(1 AS BIGINT))=2, (d + CAST(1 AS DOUBLE))=2.0, (NOT b)=False, list[1]=2,             dict[s]=0, time=datetime.datetime(2014, 8, 1, 14, 1, 5), a=1)]
+ |      &gt;&gt;&gt; df.rdd.map(lambda x: (x.i, x.s, x.d, x.l, x.b, x.time, x.row.a, x.list)).collect()
+ |      [(1, &#39;string&#39;, 1.0, 1, True, datetime.datetime(2014, 8, 1, 14, 1, 5), 1, [1, 2, 3])]
+ |  
+ |  createDataFrame(self, data, schema=None, samplingRatio=None, verifySchema=True)
+ |      Creates a :class:`DataFrame` from an :class:`RDD`, a list or a :class:`pandas.DataFrame`.
+ |      
+ |      When ``schema`` is a list of column names, the type of each column
+ |      will be inferred from ``data``.
+ |      
+ |      When ``schema`` is ``None``, it will try to infer the schema (column names and types)
+ |      from ``data``, which should be an RDD of either :class:`Row`,
+ |      :class:`namedtuple`, or :class:`dict`.
+ |      
+ |      When ``schema`` is :class:`pyspark.sql.types.DataType` or a datatype string, it must match
+ |      the real data, or an exception will be thrown at runtime. If the given schema is not
+ |      :class:`pyspark.sql.types.StructType`, it will be wrapped into a
+ |      :class:`pyspark.sql.types.StructType` as its only field, and the field name will be &#34;value&#34;.
+ |      Each record will also be wrapped into a tuple, which can be converted to row later.
+ |      
+ |      If schema inference is needed, ``samplingRatio`` is used to determined the ratio of
+ |      rows used for schema inference. The first row will be used if ``samplingRatio`` is ``None``.
+ |      
+ |      :param data: an RDD of any kind of SQL data representation (e.g. row, tuple, int, boolean,
+ |          etc.), :class:`list`, or :class:`pandas.DataFrame`.
+ |      :param schema: a :class:`pyspark.sql.types.DataType` or a datatype string or a list of
+ |          column names, default is ``None``.  The data type string format equals to
+ |          :class:`pyspark.sql.types.DataType.simpleString`, except that top level struct type can
+ |          omit the ``struct&lt;&gt;`` and atomic types use ``typeName()`` as their format, e.g. use
+ |          ``byte`` instead of ``tinyint`` for :class:`pyspark.sql.types.ByteType`. We can also use
+ |          ``int`` as a short name for ``IntegerType``.
+ |      :param samplingRatio: the sample ratio of rows used for inferring
+ |      :param verifySchema: verify data types of every row against schema.
+ |      :return: :class:`DataFrame`
+ |      
+ |      .. versionchanged:: 2.1
+ |         Added verifySchema.
+ |      
+ |      .. note:: Usage with spark.sql.execution.arrow.pyspark.enabled=True is experimental.
+ |      
+ |      .. note:: When Arrow optimization is enabled, strings inside Pandas DataFrame in Python
+ |          2 are converted into bytes as they are bytes in Python 2 whereas regular strings are
+ |          left as strings. When using strings in Python 2, use unicode `u&#34;&#34;` as Python standard
+ |          practice.
+ |      
+ |      &gt;&gt;&gt; l = [(&#39;Alice&#39;, 1)]
+ |      &gt;&gt;&gt; spark.createDataFrame(l).collect()
+ |      [Row(_1=&#39;Alice&#39;, _2=1)]
+ |      &gt;&gt;&gt; spark.createDataFrame(l, [&#39;name&#39;, &#39;age&#39;]).collect()
+ |      [Row(name=&#39;Alice&#39;, age=1)]
+ |      
+ |      &gt;&gt;&gt; d = [{&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 1}]
+ |      &gt;&gt;&gt; spark.createDataFrame(d).collect()
+ |      [Row(age=1, name=&#39;Alice&#39;)]
+ |      
+ |      &gt;&gt;&gt; rdd = sc.parallelize(l)
+ |      &gt;&gt;&gt; spark.createDataFrame(rdd).collect()
+ |      [Row(_1=&#39;Alice&#39;, _2=1)]
+ |      &gt;&gt;&gt; df = spark.createDataFrame(rdd, [&#39;name&#39;, &#39;age&#39;])
+ |      &gt;&gt;&gt; df.collect()
+ |      [Row(name=&#39;Alice&#39;, age=1)]
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql import Row
+ |      &gt;&gt;&gt; Person = Row(&#39;name&#39;, &#39;age&#39;)
+ |      &gt;&gt;&gt; person = rdd.map(lambda r: Person(*r))
+ |      &gt;&gt;&gt; df2 = spark.createDataFrame(person)
+ |      &gt;&gt;&gt; df2.collect()
+ |      [Row(name=&#39;Alice&#39;, age=1)]
+ |      
+ |      &gt;&gt;&gt; from pyspark.sql.types import *
+ |      &gt;&gt;&gt; schema = StructType([
+ |      ...    StructField(&#34;name&#34;, StringType(), True),
+ |      ...    StructField(&#34;age&#34;, IntegerType(), True)])
+ |      &gt;&gt;&gt; df3 = spark.createDataFrame(rdd, schema)
+ |      &gt;&gt;&gt; df3.collect()
+ |      [Row(name=&#39;Alice&#39;, age=1)]
+ |      
+ |      &gt;&gt;&gt; spark.createDataFrame(df.toPandas()).collect()  # doctest: +SKIP
+ |      [Row(name=&#39;Alice&#39;, age=1)]
+ |      &gt;&gt;&gt; spark.createDataFrame(pandas.DataFrame([[1, 2]])).collect()  # doctest: +SKIP
+ |      [Row(0=1, 1=2)]
+ |      
+ |      &gt;&gt;&gt; spark.createDataFrame(rdd, &#34;a: string, b: int&#34;).collect()
+ |      [Row(a=&#39;Alice&#39;, b=1)]
+ |      &gt;&gt;&gt; rdd = rdd.map(lambda row: row[1])
+ |      &gt;&gt;&gt; spark.createDataFrame(rdd, &#34;int&#34;).collect()
+ |      [Row(value=1)]
+ |      &gt;&gt;&gt; spark.createDataFrame(rdd, &#34;boolean&#34;).collect() # doctest: +IGNORE_EXCEPTION_DETAIL
+ |      Traceback (most recent call last):
+ |          ...
+ |      Py4JJavaError: ...
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  newSession(self)
+ |      Returns a new SparkSession as new session, that has separate SQLConf,
+ |      registered temporary views and UDFs, but shared SparkContext and
+ |      table cache.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  range(self, start, end=None, step=1, numPartitions=None)
+ |      Create a :class:`DataFrame` with single :class:`pyspark.sql.types.LongType` column named
+ |      ``id``, containing elements in a range from ``start`` to ``end`` (exclusive) with
+ |      step value ``step``.
+ |      
+ |      :param start: the start value
+ |      :param end: the end value (exclusive)
+ |      :param step: the incremental step (default: 1)
+ |      :param numPartitions: the number of partitions of the DataFrame
+ |      :return: :class:`DataFrame`
+ |      
+ |      &gt;&gt;&gt; spark.range(1, 7, 2).collect()
+ |      [Row(id=1), Row(id=3), Row(id=5)]
+ |      
+ |      If only one argument is specified, it will be used as the end value.
+ |      
+ |      &gt;&gt;&gt; spark.range(3).collect()
+ |      [Row(id=0), Row(id=1), Row(id=2)]
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  sql(self, sqlQuery)
+ |      Returns a :class:`DataFrame` representing the result of the given query.
+ |      
+ |      :return: :class:`DataFrame`
+ |      
+ |      &gt;&gt;&gt; df.createOrReplaceTempView(&#34;table1&#34;)
+ |      &gt;&gt;&gt; df2 = spark.sql(&#34;SELECT field1 AS f1, field2 as f2 from table1&#34;)
+ |      &gt;&gt;&gt; df2.collect()
+ |      [Row(f1=1, f2=&#39;row1&#39;), Row(f1=2, f2=&#39;row2&#39;), Row(f1=3, f2=&#39;row3&#39;)]
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  stop(self)
+ |      Stop the underlying :class:`SparkContext`.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  table(self, tableName)
+ |      Returns the specified table as a :class:`DataFrame`.
+ |      
+ |      :return: :class:`DataFrame`
+ |      
+ |      &gt;&gt;&gt; df.createOrReplaceTempView(&#34;table1&#34;)
+ |      &gt;&gt;&gt; df2 = spark.table(&#34;table1&#34;)
+ |      &gt;&gt;&gt; sorted(df.collect()) == sorted(df2.collect())
+ |      True
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Class methods defined here:
+ |  
+ |  getActiveSession() from builtins.type
+ |      Returns the active SparkSession for the current thread, returned by the builder
+ |      
+ |      :return: :class:`SparkSession` if an active session exists for the current thread
+ |      
+ |      &gt;&gt;&gt; s = SparkSession.getActiveSession()
+ |      &gt;&gt;&gt; l = [(&#39;Alice&#39;, 1)]
+ |      &gt;&gt;&gt; rdd = s.sparkContext.parallelize(l)
+ |      &gt;&gt;&gt; df = s.createDataFrame(rdd, [&#39;name&#39;, &#39;age&#39;])
+ |      &gt;&gt;&gt; df.select(&#34;age&#34;).collect()
+ |      [Row(age=1)]
+ |      
+ |      .. versionadded:: 3.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |  
+ |  catalog
+ |      Interface through which the user may create, drop, alter or query underlying
+ |      databases, tables, functions, etc.
+ |      
+ |      :return: :class:`Catalog`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  conf
+ |      Runtime configuration interface for Spark.
+ |      
+ |      This is the interface through which the user can get and set all Spark and Hadoop
+ |      configurations that are relevant to Spark SQL. When getting the value of a config,
+ |      this defaults to the value set in the underlying :class:`SparkContext`, if any.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  read
+ |      Returns a :class:`DataFrameReader` that can be used to read data
+ |      in as a :class:`DataFrame`.
+ |      
+ |      :return: :class:`DataFrameReader`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  readStream
+ |      Returns a :class:`DataStreamReader` that can be used to read data streams
+ |      as a streaming :class:`DataFrame`.
+ |      
+ |      .. note:: Evolving.
+ |      
+ |      :return: :class:`DataStreamReader`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  sparkContext
+ |      Returns the underlying :class:`SparkContext`.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  streams
+ |      Returns a :class:`StreamingQueryManager` that allows managing all the
+ |      :class:`StreamingQuery` instances active on `this` context.
+ |      
+ |      .. note:: Evolving.
+ |      
+ |      :return: :class:`StreamingQueryManager`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  udf
+ |      Returns a :class:`UDFRegistration` for UDF registration.
+ |      
+ |      :return: :class:`UDFRegistration`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  version
+ |      The version of Spark on which this application is running.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  Builder = &lt;class &#39;pyspark.sql.session.SparkSession.Builder&#39;&gt;
+ |      Builder for :class:`SparkSession`.
+ |  
+ |  builder = &lt;pyspark.sql.session.SparkSession.Builder object&gt;
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from pyspark.sql.pandas.conversion.SparkConversionMixin:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[47]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Help on Catalog in module pyspark.sql.catalog object:
+
+class Catalog(builtins.object)
+ |  Catalog(sparkSession)
+ |  
+ |  User-facing catalog API, accessible through `SparkSession.catalog`.
+ |  
+ |  This is a thin wrapper around its Scala implementation org.apache.spark.sql.catalog.Catalog.
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(self, sparkSession)
+ |      Create a new Catalog that wraps the underlying JVM object.
+ |  
+ |  cacheTable(self, tableName)
+ |      Caches the specified table in-memory.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  clearCache(self)
+ |      Removes all cached tables from the in-memory cache.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  createExternalTable(self, tableName, path=None, source=None, schema=None, **options)
+ |      Creates a table based on the dataset in a data source.
+ |      
+ |      It returns the DataFrame associated with the external table.
+ |      
+ |      The data source is specified by the ``source`` and a set of ``options``.
+ |      If ``source`` is not specified, the default data source configured by
+ |      ``spark.sql.sources.default`` will be used.
+ |      
+ |      Optionally, a schema can be provided as the schema of the returned :class:`DataFrame` and
+ |      created external table.
+ |      
+ |      :return: :class:`DataFrame`
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  createTable(self, tableName, path=None, source=None, schema=None, **options)
+ |      Creates a table based on the dataset in a data source.
+ |      
+ |      It returns the DataFrame associated with the table.
+ |      
+ |      The data source is specified by the ``source`` and a set of ``options``.
+ |      If ``source`` is not specified, the default data source configured by
+ |      ``spark.sql.sources.default`` will be used. When ``path`` is specified, an external table is
+ |      created from the data at the given path. Otherwise a managed table is created.
+ |      
+ |      Optionally, a schema can be provided as the schema of the returned :class:`DataFrame` and
+ |      created table.
+ |      
+ |      :return: :class:`DataFrame`
+ |      
+ |      .. versionadded:: 2.2
+ |  
+ |  currentDatabase(self)
+ |      Returns the current default database in this session.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  dropGlobalTempView(self, viewName)
+ |      Drops the global temporary view with the given view name in the catalog.
+ |      If the view has been cached before, then it will also be uncached.
+ |      Returns true if this view is dropped successfully, false otherwise.
+ |      
+ |      &gt;&gt;&gt; spark.createDataFrame([(1, 1)]).createGlobalTempView(&#34;my_table&#34;)
+ |      &gt;&gt;&gt; spark.table(&#34;global_temp.my_table&#34;).collect()
+ |      [Row(_1=1, _2=1)]
+ |      &gt;&gt;&gt; spark.catalog.dropGlobalTempView(&#34;my_table&#34;)
+ |      &gt;&gt;&gt; spark.table(&#34;global_temp.my_table&#34;) # doctest: +IGNORE_EXCEPTION_DETAIL
+ |      Traceback (most recent call last):
+ |          ...
+ |      AnalysisException: ...
+ |      
+ |      .. versionadded:: 2.1
+ |  
+ |  dropTempView(self, viewName)
+ |      Drops the local temporary view with the given view name in the catalog.
+ |      If the view has been cached before, then it will also be uncached.
+ |      Returns true if this view is dropped successfully, false otherwise.
+ |      
+ |      Note that, the return type of this method was None in Spark 2.0, but changed to Boolean
+ |      in Spark 2.1.
+ |      
+ |      &gt;&gt;&gt; spark.createDataFrame([(1, 1)]).createTempView(&#34;my_table&#34;)
+ |      &gt;&gt;&gt; spark.table(&#34;my_table&#34;).collect()
+ |      [Row(_1=1, _2=1)]
+ |      &gt;&gt;&gt; spark.catalog.dropTempView(&#34;my_table&#34;)
+ |      &gt;&gt;&gt; spark.table(&#34;my_table&#34;) # doctest: +IGNORE_EXCEPTION_DETAIL
+ |      Traceback (most recent call last):
+ |          ...
+ |      AnalysisException: ...
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  isCached(self, tableName)
+ |      Returns true if the table is currently cached in-memory.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  listColumns(self, tableName, dbName=None)
+ |      Returns a list of columns for the given table/view in the specified database.
+ |      
+ |      If no database is specified, the current database is used.
+ |      
+ |      Note: the order of arguments here is different from that of its JVM counterpart
+ |      because Python does not support method overloading.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  listDatabases(self)
+ |      Returns a list of databases available across all sessions.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  listFunctions(self, dbName=None)
+ |      Returns a list of functions registered in the specified database.
+ |      
+ |      If no database is specified, the current database is used.
+ |      This includes all temporary functions.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  listTables(self, dbName=None)
+ |      Returns a list of tables/views in the specified database.
+ |      
+ |      If no database is specified, the current database is used.
+ |      This includes all temporary views.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  recoverPartitions(self, tableName)
+ |      Recovers all the partitions of the given table and update the catalog.
+ |      
+ |      Only works with a partitioned table, and not a view.
+ |      
+ |      .. versionadded:: 2.1.1
+ |  
+ |  refreshByPath(self, path)
+ |      Invalidates and refreshes all the cached data (and the associated metadata) for any
+ |      DataFrame that contains the given data source path.
+ |      
+ |      .. versionadded:: 2.2.0
+ |  
+ |  refreshTable(self, tableName)
+ |      Invalidates and refreshes all the cached data and metadata of the given table.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  registerFunction(self, name, f, returnType=None)
+ |      An alias for :func:`spark.udf.register`.
+ |      See :meth:`pyspark.sql.UDFRegistration.register`.
+ |      
+ |      .. note:: Deprecated in 2.3.0. Use :func:`spark.udf.register` instead.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  setCurrentDatabase(self, dbName)
+ |      Sets the current default database in this session.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  uncacheTable(self, tableName)
+ |      Removes the specified table from the in-memory cache.
+ |      
+ |      .. versionadded:: 2.0
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[48]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spark2</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">newSession</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spark2</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">spark</span> <span class="o">!=</span> <span class="n">spark2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spark2</span><span class="o">.</span><span class="n">sparkContext</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span> <span class="o">==</span> <span class="n">spark2</span><span class="o">.</span><span class="n">sparkContext</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>&lt;pyspark.sql.session.SparkSession object at 0x7fcb2d7c7f10&gt;
+&lt;pyspark.sql.session.SparkSession object at 0x7fcb2d75f6a0&gt;
+&lt;SparkContext master=local[*] appName=pyspark-shell&gt;
+&lt;SparkContext master=local[*] appName=pyspark-shell&gt;
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[49]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">printConfiguration</span><span class="p">(</span><span class="n">spark</span><span class="p">):</span>
+    <span class="n">defaultShufflePartitions</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">))</span>
+    <span class="n">defaultMinPartitions</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">defaultMinPartitions</span>
+    <span class="n">defaultParallelism</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">defaultParallelism</span>
+    <span class="n">defaultMaxPartitionBytes</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.files.maxPartitionBytes&quot;</span><span class="p">)</span>
+    <span class="n">defaultOpenCostInBytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.files.openCostInBytes&quot;</span><span class="p">))</span>
+    <span class="n">sqlCrossJoinEnabled</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.crossJoin.enabled&quot;</span><span class="p">)</span>
+    <span class="n">sqlWarehouseDir</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.warehouse.dir&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;defaultShufflePartitions:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaultShufflePartitions</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;defaultMinPartitions:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaultMinPartitions</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;defaultParallelism:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaultParallelism</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;defaultMaxPartitionBytes:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaultMaxPartitionBytes</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;defaultOpenCostInBytes:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaultOpenCostInBytes</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sqlCrossJoinEnabled:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sqlCrossJoinEnabled</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sqlWarehouseDir:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sqlWarehouseDir</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[50]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnm_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;inferSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;data/databricks/mnm_dataset.csv&quot;</span><span class="p">)</span>
+<span class="n">mnm_df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;mnm_dataset&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;show tables&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.crossJoin.enabled&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
+<span class="n">printConfiguration</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------+-----------+-----------+
+|database|  tableName|isTemporary|
++--------+-----------+-----------+
+|        |mnm_dataset|       true|
+|        |      users|       true|
++--------+-----------+-----------+
+
+defaultShufflePartitions:100
+defaultMinPartitions:2
+defaultParallelism:4
+defaultMaxPartitionBytes:134217728b
+defaultOpenCostInBytes:4194304
+sqlCrossJoinEnabled:true
+sqlWarehouseDir:file:/home/jovyan/work/spark-warehouse
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[51]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spark2</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;show tables&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">spark2</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span>
+<span class="n">spark2</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.crossJoin.enabled&quot;</span><span class="p">)</span>
+<span class="n">spark2</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
+<span class="n">printConfiguration</span><span class="p">(</span><span class="n">spark2</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------+---------+-----------+
+|database|tableName|isTemporary|
++--------+---------+-----------+
++--------+---------+-----------+
+
+defaultShufflePartitions:200
+defaultMinPartitions:2
+defaultParallelism:4
+defaultMaxPartitionBytes:134217728b
+defaultOpenCostInBytes:4194304
+sqlCrossJoinEnabled:true
+sqlWarehouseDir:file:/home/jovyan/work/spark-warehouse
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Q2.-&#53076;&#46300;&#47484;-&#53685;&#54644;&#49436;-&#45936;&#51060;&#53552;-&#54532;&#47112;&#51076;&#51012;-&#51076;&#51032;&#47196;-&#49373;&#49457;&#54624;-&#49688;-&#51080;&#45208;&#50836;?">Q2. &#53076;&#46300;&#47484; &#53685;&#54644;&#49436; &#45936;&#51060;&#53552; &#54532;&#47112;&#51076;&#51012; &#51076;&#51032;&#47196; &#49373;&#49457;&#54624; &#49688; &#51080;&#45208;&#50836;?<a class="anchor-link" href="#Q2.-&#53076;&#46300;&#47484;-&#53685;&#54644;&#49436;-&#45936;&#51060;&#53552;-&#54532;&#47112;&#51076;&#51012;-&#51076;&#51032;&#47196;-&#49373;&#49457;&#54624;-&#49688;-&#51080;&#45208;&#50836;?">&#182;</a></h3><h3 id="A2.-Scala-&#45716;-Seq-&#44061;&#52404;&#47484;-&#53685;&#54644;&#49436;,-Python-&#51008;-Dict&#50752;-Row-&#44061;&#52404;&#47484;-&#53685;&#54644;&#49436;-&#49373;&#49457;&#51060;-&#44032;&#45733;&#54633;&#45768;&#45796;">A2. Scala &#45716; Seq &#44061;&#52404;&#47484; &#53685;&#54644;&#49436;, Python &#51008; Dict&#50752; Row &#44061;&#52404;&#47484; &#53685;&#54644;&#49436; &#49373;&#49457;&#51060; &#44032;&#45733;&#54633;&#45768;&#45796;<a class="anchor-link" href="#A2.-Scala-&#45716;-Seq-&#44061;&#52404;&#47484;-&#53685;&#54644;&#49436;,-Python-&#51008;-Dict&#50752;-Row-&#44061;&#52404;&#47484;-&#53685;&#54644;&#49436;-&#49373;&#49457;&#51060;-&#44032;&#45733;&#54633;&#45768;&#45796;">&#182;</a></h3><ul>
+<li>Scala Example<div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">emp</span> <span class="o">=</span> <span class="nc">Seq</span><span class="o">((</span><span class="mi">101</span><span class="o">,</span> <span class="s">&quot;Amy&quot;</span><span class="o">,</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">2</span><span class="o">)))</span>
+<span class="k">val</span> <span class="n">employee</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="o">(</span><span class="n">emp</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;employeeId&quot;</span><span class="o">,</span><span class="s">&quot;employeeName&quot;</span><span class="o">,</span><span class="s">&quot;managerId&quot;</span><span class="o">)</span>
+</pre></div>
+</li>
+<li>Python Example<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;employeeId&#39;</span><span class="p">:</span><span class="mi">101</span><span class="p">,</span> <span class="s1">&#39;employeeName&#39;</span><span class="p">:</span><span class="s1">&#39;Amy&#39;</span><span class="p">,</span> <span class="s1">&#39;managerId&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">dataRDD</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Row</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[59]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+<span class="c1"># emp = {&#39;employeeId&#39;:101, &#39;employeeName&#39;:&#39;Amy&#39;, &#39;managerId&#39;:2} # inferSchema 오류가 발생하므로 명시적인 스키마 지정이 필요합니다</span>
+<span class="n">emp</span> <span class="o">=</span> <span class="p">[</span><span class="n">Row</span><span class="p">(</span><span class="n">employeeId</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">employeeName</span><span class="o">=</span><span class="s1">&#39;Severin&#39;</span><span class="p">,</span> <span class="n">managerId</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">Row</span><span class="p">(</span><span class="n">employeeId</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">employeeName</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">managerId</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">employee</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">emp</span><span class="p">))</span>
+<span class="n">employee</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<span class="n">employee</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>root
+ |-- employeeId: long (nullable = true)
+ |-- employeeName: string (nullable = true)
+ |-- managerId: long (nullable = true)
+
++----------+------------+---------+
+|employeeId|employeeName|managerId|
++----------+------------+---------+
+|1         |Severin     |0        |
+|2         |John        |1        |
++----------+------------+---------+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[54]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;visitor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;jelmer&#39;</span><span class="p">],</span> 
+        <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">Row</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">ddf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">ddf</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<span class="n">ddf</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>root
+ |-- A: array (nullable = true)
+ |    |-- element: long (containsNull = true)
+ |-- B: array (nullable = true)
+ |    |-- element: long (containsNull = true)
+ |-- C: array (nullable = true)
+ |    |-- element: long (containsNull = true)
+ |-- visitor: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+
++---------+---------+---------+------------------+
+|A        |B        |C        |visitor           |
++---------+---------+---------+------------------+
+|[0, 1, 0]|[1, 0, 1]|[1, 0, 0]|[foo, bar, jelmer]|
++---------+---------+---------+------------------+
 
 </pre>
 </div>
