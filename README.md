@@ -29,3 +29,5 @@ $ docker-compose logs notebook
   - [2. 스파크 델타 레이크 실습](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-delta-2.html)
 * 스파크 스트리밍 실습
   - [1. 스파크 스트리밍 예제](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/pyspark-stream-1.html)
+* 러닝 스파크 실습
+  - [5. UDF 다루기](http://htmlpreview.github.io/?https://github.com/psyoblade/data-engineer-training/blob/master/spark/notebooks/html/learning-spark-ch05.html)
