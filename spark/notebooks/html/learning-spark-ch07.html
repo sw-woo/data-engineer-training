@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>scala-basic-1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>learning-spark-ch07</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14334,13 +14334,28 @@ a.anchor-link {
     </script>
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="CHAPTER-7.-Optimizing-and-Tuning-Spark-Applications">CHAPTER 7. Optimizing and Tuning Spark Applications<a class="anchor-link" href="#CHAPTER-7.-Optimizing-and-Tuning-Spark-Applications">&#182;</a></h1><blockquote><p>6장에서는 스파크가 어떻게 메모리 관리를 하고, 고급 API 를 통해서 데이터셋을 구성하는 지에 대해 학습했으며, 이번 장에서는 최적화를 위한 스파크 설정과, 조인 전략들을 살펴보고, 스파크 UI 를 통해 안좋은 영향을 줄 수 있는 것들에 대한 힌트를 얻고자 합니다.</p>
+</blockquote>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span><span class="n">spark</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">SparkSession</span>
+    <span class="o">.</span><span class="n">builder</span>
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.session.timeZone&quot;</span><span class="p">,</span> <span class="s2">&quot;Asia/Seoul&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14348,109 +14363,34 @@ a.anchor-link {
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>Intitializing Scala interpreter ...</pre>
 </div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>Spark Web UI available at http://ddd9c0cd39a3:4041
-SparkContext available as &#39;sc&#39; (version = 3.0.1, master = local[*], app id = local-1619450104350)
-SparkSession available as &#39;spark&#39;
-</pre>
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>res0: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@55d0f6fe
-</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span><span class="k">val</span> <span class="n">emp</span> <span class="o">=</span> <span class="nc">Seq</span><span class="o">((</span><span class="mi">101</span><span class="o">,</span> <span class="s">&quot;Amy&quot;</span><span class="o">,</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">2</span><span class="o">)))</span>
-<span class="k">val</span> <span class="n">employee</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="o">(</span><span class="n">emp</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;employeeId&quot;</span><span class="o">,</span><span class="s">&quot;employeeName&quot;</span><span class="o">,</span><span class="s">&quot;managerId&quot;</span><span class="o">)</span>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.1-Optimizing-and-Tuning-Spark-for-Efficiency">7.1 Optimizing and Tuning Spark for Efficiency<a class="anchor-link" href="#7.1-Optimizing-and-Tuning-Spark-for-Efficiency">&#182;</a></h2><blockquote><p>스파크는 <a href="https://spark.apache.org/docs/latest/tuning.html">튜닝</a>을 위한 다양한 설정을 제공하며, <a href="https://spark.apache.org/docs/latest/configuration.html">설정</a>값을 통해 확인할 수 있습니다</p>
+</blockquote>
+<h3 id="7.1.1-Viewing-and-Setting-Apache-Spark-Configurations">7.1.1 Viewing and Setting Apache Spark Configurations<a class="anchor-link" href="#7.1.1-Viewing-and-Setting-Apache-Spark-Configurations">&#182;</a></h3><blockquote><p>아래의 순서대로 스파크는 설정값을 읽어들이며, 가장 마지막에 변경된 값이 반영됩니다</p>
+</blockquote>
+<h4 id="1.-&#49444;&#52824;&#46108;-&#49828;&#54028;&#53356;-&#44221;&#47196;&#51032;-conf/spark-default.conf-&#54028;&#51068;&#51012;-&#49373;&#49457;-&#48143;-&#49688;&#51221;">1. &#49444;&#52824;&#46108; &#49828;&#54028;&#53356; &#44221;&#47196;&#51032; conf/spark-default.conf &#54028;&#51068;&#51012; &#49373;&#49457; &#48143; &#49688;&#51221;<a class="anchor-link" href="#1.-&#49444;&#52824;&#46108;-&#49828;&#54028;&#53356;-&#44221;&#47196;&#51032;-conf/spark-default.conf-&#54028;&#51068;&#51012;-&#49373;&#49457;-&#48143;-&#49688;&#51221;">&#182;</a></h4><h4 id="2.-&#49828;&#54028;&#53356;-&#49892;&#54665;-&#49884;&#50640;-&#50741;&#49496;&#51012;-&#51648;&#51221;&#54616;&#45716;-&#48169;&#48277;">2. &#49828;&#54028;&#53356; &#49892;&#54665; &#49884;&#50640; &#50741;&#49496;&#51012; &#51648;&#51221;&#54616;&#45716; &#48169;&#48277;<a class="anchor-link" href="#2.-&#49828;&#54028;&#53356;-&#49892;&#54665;-&#49884;&#50640;-&#50741;&#49496;&#51012;-&#51648;&#51221;&#54616;&#45716;-&#48169;&#48277;">&#182;</a></h4><div class="highlight"><pre><span></span>$ spark-submit --conf spark.sql.shuffle.partitions<span class="o">=</span><span class="m">5</span> --conf <span class="s2">&quot;spark.executor.memory=2g&quot;</span> --class main.scala.chapter7.SparkConfig_7_1 jars/mainscala-chapter7_2.12-1.0.jar
+</pre></div>
+<h4 id="3.-&#49828;&#54028;&#53356;-&#53076;&#46300;-&#45236;&#50640;&#49436;-&#51649;&#51217;-&#51648;&#51221;&#54616;&#45716;-&#48169;&#48277;">3. &#49828;&#54028;&#53356; &#53076;&#46300; &#45236;&#50640;&#49436; &#51649;&#51217; &#51648;&#51221;&#54616;&#45716; &#48169;&#48277;<a class="anchor-link" href="#3.-&#49828;&#54028;&#53356;-&#53076;&#46300;-&#45236;&#50640;&#49436;-&#51649;&#51217;-&#51648;&#51221;&#54616;&#45716;-&#48169;&#48277;">&#182;</a></h4><div class="highlight"><pre><span></span><span class="nc">SparkSession</span><span class="o">.</span><span class="n">builder</span>
+<span class="o">.</span><span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.shuffle.partitions&quot;</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="o">.</span><span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.executor.memroy&quot;</span><span class="o">,</span> <span class="s">&quot;2g&quot;</span><span class="o">)</span>
+<span class="o">...</span>
 </pre></div>
 
-     </div>
 </div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>emp: Seq[(Int, String, Some[Int])] = List((101,Amy,Some(2)))
-employee: org.apache.spark.sql.DataFrame = [employeeId: int, employeeName: string ... 1 more field]
-</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span><span class="n">employee</span><span class="o">.</span><span class="n">printSchema</span><span class="o">()</span>
-<span class="n">employee</span><span class="o">.</span><span class="n">show</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 파이스파크 내에서는 sparkContext 를 통해서 해당 정보를 가져올 수 있습니다</span>
+<span class="k">def</span> <span class="nf">printConfigs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">getAll</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">printConfigs</span><span class="p">(</span><span class="n">spark</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14470,17 +14410,18 @@ employee: org.apache.spark.sql.DataFrame = [employeeId: int, employeeName: strin
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>root
- |-- employeeId: integer (nullable = false)
- |-- employeeName: string (nullable = true)
- |-- managerId: integer (nullable = true)
-
-+----------+------------+---------+
-|employeeId|employeeName|managerId|
-+----------+------------+---------+
-|101       |Amy         |2        |
-+----------+------------+---------+
-
+<pre>(&#39;spark.app.id&#39;, &#39;local-1619576347079&#39;)
+(&#39;spark.app.name&#39;, &#39;pyspark-shell&#39;)
+(&#39;spark.driver.host&#39;, &#39;ddd9c0cd39a3&#39;)
+(&#39;spark.driver.port&#39;, &#39;42483&#39;)
+(&#39;spark.executor.id&#39;, &#39;driver&#39;)
+(&#39;spark.master&#39;, &#39;local[*]&#39;)
+(&#39;spark.rdd.compress&#39;, &#39;True&#39;)
+(&#39;spark.serializer.objectStreamReset&#39;, &#39;100&#39;)
+(&#39;spark.sql.session.timeZone&#39;, &#39;Asia/Seoul&#39;)
+(&#39;spark.submit.deployMode&#39;, &#39;client&#39;)
+(&#39;spark.submit.pyFiles&#39;, &#39;&#39;)
+(&#39;spark.ui.showConsoleProgress&#39;, &#39;true&#39;)
 </pre>
 </div>
 </div>
@@ -14492,12 +14433,11 @@ employee: org.apache.spark.sql.DataFrame = [employeeId: int, employeeName: strin
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span><span class="k">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">1000000</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">).</span><span class="n">withColumn</span><span class="o">(</span><span class="s">&quot;square&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;id&quot;</span> <span class="o">*</span> <span class="n">$</span><span class="s">&quot;id&quot;</span><span class="o">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">cache</span><span class="o">()</span> <span class="c1">// Cache the data</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">time</span><span class="o">(</span><span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="o">())</span> <span class="c1">// Materialize the cache</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># SparkSQL의 경우 내부적으로 사용되는 설정값이 다르기 때문에 더 많은 정보가 출력됩니다</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SET -v&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;key like &#39;</span><span class="si">%s</span><span class="s2">park.sql%&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14517,25 +14457,260 @@ employee: org.apache.spark.sql.DataFrame = [employeeId: int, employeeName: strin
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Time taken: 473 ms
+<pre>+---------------------------------------------------------+----------------------------------------------------------------+
+|key                                                      |value                                                           |
++---------------------------------------------------------+----------------------------------------------------------------+
+|spark.sql.adaptive.advisoryPartitionSizeInBytes          |&lt;value of spark.sql.adaptive.shuffle.targetPostShuffleInputSize&gt;|
+|spark.sql.adaptive.coalescePartitions.enabled            |true                                                            |
+|spark.sql.adaptive.coalescePartitions.initialPartitionNum|&lt;undefined&gt;                                                     |
+|spark.sql.adaptive.coalescePartitions.minPartitionNum    |&lt;undefined&gt;                                                     |
+|spark.sql.adaptive.enabled                               |false                                                           |
++---------------------------------------------------------+----------------------------------------------------------------+
+only showing top 5 rows
+
 </pre>
 </div>
 </div>
 
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>스파크 UI 를 통해서도 확인이 가능합니다</li>
+</ul>
+<p><img src="images/spark-ui.png" alt="spakr-ui"></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 스파크 기본 설정 spark.sql.shuffle.partitions 값을 확인하고, 프로그램 상에서 변경 후 테스트 합니다</span>
+<span class="n">num_partitions</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">mod_partitions</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.shuffle.partitions&quot;</span><span class="p">,</span> <span class="n">num_partitions</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num_partitions</span><span class="p">,</span> <span class="n">mod_partitions</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>200 5
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="7.1.2-Scaling-Spark-for-Large-Workloads">7.1.2 Scaling Spark for Large Workloads<a class="anchor-link" href="#7.1.2-Scaling-Spark-for-Large-Workloads">&#182;</a></h3><h4 id="1.-&#51221;&#51201;-vs-&#46041;&#51201;-&#47532;&#49548;&#49828;-&#54624;&#45817;&#51032;-&#49440;&#53469;">1. &#51221;&#51201; vs &#46041;&#51201; &#47532;&#49548;&#49828; &#54624;&#45817;&#51032; &#49440;&#53469;<a class="anchor-link" href="#1.-&#51221;&#51201;-vs-&#46041;&#51201;-&#47532;&#49548;&#49828;-&#54624;&#45817;&#51032;-&#49440;&#53469;">&#182;</a></h4><blockquote><p>CPU 및 Memory 사용을 애플리케이션에 따라 지정하는 정적 리소스 할당과 동적 리소스 할당은 처리해야 할 데이터의 특성에 따라 선택할 수 있으며, 환경설정을 다르게 구성해야 합니다.</p>
+</blockquote>
+<ul>
+<li>데이터의 크기가 일정하지 않고, 유동적</li>
+<li>특히 데이터의 크기가 고르지 않은 스트리밍 처리</li>
+<li>멀티테넌시 환경의 분석용 클러스터의 데이터 리소스 관리</li>
+</ul>
+<h4 id="2.-&#46041;&#51201;-&#47532;&#49548;&#49828;-&#54624;&#45817;-&#49444;&#51221;-&#44032;&#51060;&#46300;">2. &#46041;&#51201; &#47532;&#49548;&#49828; &#54624;&#45817; &#49444;&#51221; &#44032;&#51060;&#46300;<a class="anchor-link" href="#2.-&#46041;&#51201;-&#47532;&#49548;&#49828;-&#54624;&#45817;-&#49444;&#51221;-&#44032;&#51060;&#46300;">&#182;</a></h4><ul>
+<li>기본 설정은 false 이므로 아래의 값들에 대한 설정이 별도로 되어야 하며, REPL 환경에서 지원하지 않는 값들도 존재하므로, 프로그램을 통한 수정이 필요합니다
+<pre><code>spark.dynamicAllocation.enabled true
+spark.dynamicAllocation.minExecutors 2
+spark.dynamicAllocation.schedulerBacklogTimeout 1m
+spark.dynamicAllocation.maxExecutors 20
+spark.dynamicAllocation.executorIdleTimeout 2min</code></pre>
+</li>
+<li>아래의 과정을 통해 동적 리소스를 관리합니다<ul>
+<li><ol>
+<li>스파크 드라이버가 클러스터 매니저에 2개(minExecutors)의 익스큐터를 요청합니다</li>
+</ol>
+</li>
+<li><ol>
+<li>작업 큐의 백로그가 증가하여, 백로그 타임아웃(schedulerBacklogTimeout)이 발생하는 경우 새로운 익스큐터 요청이 발생합니다</li>
+</ol>
+</li>
+<li><ol>
+<li>스케줄링 된 작업들이 1분 이상 지연되는 경우 드라이버는 새로운 익스큐터를 최대 20개(maxExecutors) 까지 요청합니다</li>
+</ol>
+</li>
+<li><ol>
+<li>스파크 드라이버는 2분 이상 (executorIdleTimeout) 작업이 할당되지 않는 익스큐터 들을 종료시킵니다</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3.-&#49828;&#54028;&#53356;-&#51061;&#49828;&#53328;&#53552;&#51032;-&#47700;&#47784;&#47532;&#50752;-&#49492;&#54540;-&#49436;&#48708;&#49828;&#51032;-&#49444;&#51221;-&#44032;&#51060;&#46300;">3. &#49828;&#54028;&#53356; &#51061;&#49828;&#53328;&#53552;&#51032; &#47700;&#47784;&#47532;&#50752; &#49492;&#54540; &#49436;&#48708;&#49828;&#51032; &#49444;&#51221; &#44032;&#51060;&#46300;<a class="anchor-link" href="#3.-&#49828;&#54028;&#53356;-&#51061;&#49828;&#53328;&#53552;&#51032;-&#47700;&#47784;&#47532;&#50752;-&#49492;&#54540;-&#49436;&#48708;&#49828;&#51032;-&#49444;&#51221;-&#44032;&#51060;&#46300;">&#182;</a></h4><p><img src="images/external-memory-layout.png" alt="external-memory-layout"></p>
+<ul>
+<li>맵, 스필 그리고 병합 프로세스들이 I/O 부족에 따른 문제점을 갖지 않으며, 최종 셔플 파티션이 디스크에 저장되기 전에 버퍼 메모리를 확보할 수 있도록 설정을 아래와 같이 조정할 수 있습니다
+<img src="images/spark-conf-io.png" alt="spark-conf-io"></li>
+</ul>
+<h4 id="4.-&#49828;&#54028;&#53356;-&#48337;&#47148;&#49457;&#51012;-&#52572;&#45824;&#54868;">4. &#49828;&#54028;&#53356; &#48337;&#47148;&#49457;&#51012; &#52572;&#45824;&#54868;<a class="anchor-link" href="#4.-&#49828;&#54028;&#53356;-&#48337;&#47148;&#49457;&#51012;-&#52572;&#45824;&#54868;">&#182;</a></h4><blockquote><p>스파크가 데이터를 어떻게 저장소로부터 메모리에 적재하는지, 스파크에 있어서 파티션이 어떻게 활용되는지를 이해해야 합니다</p>
+</blockquote>
+<ul>
+<li>매 스테이지 마다 많은 타스크들이 존재하지만, 스파크는 기껏해야 코어당 작업당 하나의 스레드만 할당하며, 개별 타스크는 독립된 파티션 하나를 처리합니다.</li>
+<li>리소스 사용을 최적화하고, 병렬성을 최대화 하려면 익스큐터에 존재하는 코어수들 만큼 많은 파티션들이 존재해야 합니다. (유휴 코어를 두지 않기 위함)
+<img src="images/figure.7-3.png" alt="figure.7-3"></li>
+</ul>
+<h4 id="5.-&#54028;&#54000;&#49496;&#51008;-&#44396;&#49457;&#50640;-&#45824;&#54620;-&#51060;&#54644;&#50752;-&#51116;&#44396;&#49457;">5. &#54028;&#54000;&#49496;&#51008; &#44396;&#49457;&#50640; &#45824;&#54620; &#51060;&#54644;&#50752; &#51116;&#44396;&#49457;<a class="anchor-link" href="#5.-&#54028;&#54000;&#49496;&#51008;-&#44396;&#49457;&#50640;-&#45824;&#54620;-&#51060;&#54644;&#50752;-&#51116;&#44396;&#49457;">&#182;</a></h4><ul>
+<li>분산 저장소에 저장시에 구성되는 경우<ul>
+<li>HDFS, S3 등의 저장소의 기본 파일블록의 크기는 64mb, 128mb 이며, 파일 크기가 작고 많아질 수록 파티션당 할당해야 하는 코어수가 모자라기 때문에 "small file problem" 을 피해야 합니다</li>
+</ul>
+</li>
+<li>스파크의 셔플링을 통해 생성되는 경우<ul>
+<li>집계함수나 조인과 같은 Wide Transformation 과정에서 셔플링이 발생 (Network &amp; Disk I/O 비용)</li>
+<li>기본 셔플 파티션 수는 200개인데 작은 데이터집합이나, 스트리밍 워크로드 등에는 <strong>충분히 많은 수이기 때문에 조정이 필요</strong>합니다</li>
+<li>최종 결과 테이블의 용량 및 사용 용도에 따라 의도적인 파티션 수를 조정할 수 있습니다 (repartition, coalesce)</li>
+</ul>
+</li>
+</ul>
+<h4 id="&#51656;&#47928;&#44284;-&#45813;&#48320;">&#51656;&#47928;&#44284; &#45813;&#48320;<a class="anchor-link" href="#&#51656;&#47928;&#44284;-&#45813;&#48320;">&#182;</a></h4><ul>
+<li>대부분 dynamic allocation 을 쓰면 좋을거 아닐까?<ul>
+<li>워크로드가 예상된다면 동적할당은 필요없는 리소스 및 관리 비용이 더 들어가기 때문에 성능에 영향을 줄 수 있습니다</li>
+</ul>
+</li>
+<li>REPL 이 뭔가?<ul>
+<li>Read-Evaluate-Print Loop 의 약자</li>
+</ul>
+</li>
+<li>dynamic allocation 은 수시로 변경할 수 없는가? 왜 그런가?</li>
+<li>off-heap 이 좋으면 모두 off-heap 사용하지 왜 jvm 메모리를 이렇게나 많이 사용하는가?<ul>
+<li>자바에서 사용하는 구조화된 API의 장점과 네이티브 라이브러리의 데이터 송수신 및 읽고 쓰기의 장점을 모두 취하기 위함</li>
+</ul>
+</li>
+<li>execution vs storage 메모리의 비율을 어떻게 확인할 수 있는가? 오히려 삽질 아닌가?<ul>
+<li>직접 셋팅하기 보다는 관련 옵션을 조정하면서 튜닝합니다</li>
+</ul>
+</li>
+<li>spark 작업에서의 spill 절차는 무엇이고 왜 발생하며 어떻게 해결할 수 있는가?<ul>
+<li>스파크 익스큐터가 위의 각 레이어에 할당된 메모리를 모두 사용한 경우 디스크로 저장하는 경우를 Spill 이라고 합니다</li>
+<li>Disk I/O 는 성능에 큰 영향을 미치기 때문에 SSD 를 사용한다면 좋은 성능을 효과를 기대할 수 있습니다
+<pre><code>operations, the shuffle will spill results to executors’ local disks at the location specified in spark.local.directory. Having performant SSD disks for this operation will boost the performance.</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">numDF</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>df: org.apache.spark.sql.DataFrame = [id: bigint, square: bigint]
-res21: Long = 1000000
-</pre>
+<pre>16</pre>
 </div>
 
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.2-Caching-and-Persistence-of-Data">7.2 Caching and Persistence of Data<a class="anchor-link" href="#7.2-Caching-and-Persistence-of-Data">&#182;</a></h2><blockquote><p>cache() 와 persist() 는 거의 동일하지만, persist() 의 경우 persistent level 을 결정할 수 있습니다 (메모리, 디스크, 직렬화, 비직렬화 등)</p>
+</blockquote>
+<h3 id="7.2.1-DataFrame.cache()">7.2.1 DataFrame.cache()<a class="anchor-link" href="#7.2.1-DataFrame.cache()">&#182;</a></h3><ul>
+<li>DataFrame 은 부분적으로 캐시가 가능하지만, 파티션은 그렇지 못 합니다. 예를 들어 8개의 파티션 중 4.5개 정도를 사용할 메모리가 있는 경우 4개의 파티션만 캐시됩니다<ul>
+<li>캐시되지 않은 데이터를 읽는 데에는 문제가 없지만, 모두 다시 계산되어야 하는 비용이 발생합니다</li>
+</ul>
+</li>
+<li>cache() 혹은 persist() 호출 시에 DataFrame 은 take(1) 같은 경우 첫 번째 파티션만 캐싱이 이루어지고, count() 같은 action 수행 시에는 모든 데이터가 캐싱이 된다는 점을 알고 있어야 합니다<ul>
+<li>rdd.cache()는 persist(StorageLevel.MEMORY_ONLY) 로 </li>
+<li>df.cache()는 persist(StorageLevel.MEMORY_AND_DISK) 로 동작합니다</li>
+</ul>
+</li>
+</ul>
+<p><img src="images/persist-storage.png" alt="persist-storage"></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 반복적으로 수행하는 경우 노트북 프로그램의 캐싱될 수 있기 때문에, 매번 다른 프로그램 수행을 위해서 랜덤 시드숫자를 매번 더해줍니다.</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;seed number is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+<span class="n">cached</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;id * id&quot;</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">cached</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span> <span class="c1"># 데이터를 캐싱</span>
+<span class="n">cached</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="c1"># Materialize the cache</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>seed number is 18
+3.8046398162841797
+</pre>
+</div>
 </div>
 
 </div>
@@ -14545,10 +14720,12 @@ res21: Long = 1000000
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">time</span><span class="o">(</span><span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="o">())</span> <span class="c1">// Now get it from the cache</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">cached</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14568,37 +14745,908 @@ res21: Long = 1000000
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Time taken: 72 ms
+<pre>0.1505875587463379
 </pre>
 </div>
 </div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="7.2.2-DataFrame.persist()">7.2.2 DataFrame.persist()<a class="anchor-link" href="#7.2.2-DataFrame.persist()">&#182;</a></h3><p><img src="images/table.7-2.png" alt="table.7-2">
+<img src="images/figure.7-5.png" alt="figure.7-5"></p>
+<ul>
+<li>테이블 캐시를 사용하는 경우도 cache() 와 동일한 결과를 보여줍니다
+<img src="images/figure.7-5-1.png" alt="figure.7-5-1"></li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 반복적으로 수행하는 경우 노트북 프로그램의 캐싱될 수 있기 때문에, 매번 다른 프로그램 수행을 위해서 랜덤 시드숫자를 매번 더해줍니다.</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;seed number is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+<span class="n">persisted</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;id * id&quot;</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">StorageLevel</span>
+<span class="n">persisted</span><span class="o">.</span><span class="n">persist</span><span class="p">(</span><span class="n">StorageLevel</span><span class="o">.</span><span class="n">DISK_ONLY</span><span class="p">)</span> <span class="c1"># 데이터를 캐싱</span>
+<span class="n">persisted</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="c1"># Materialize the cache</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
 
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>res22: Long = 1000000
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>seed number is 37
+2.6302409172058105
 </pre>
 </div>
-
 </div>
 
 </div>
 
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">persisted</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>0.19655108451843262
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 반복적으로 수행하는 경우 노트북 프로그램의 캐싱될 수 있기 때문에, 매번 다른 프로그램 수행을 위해서 랜덤 시드숫자를 매번 더해줍니다.</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;seed number is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+<span class="n">table_cached</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;id * id&quot;</span><span class="p">))</span>
+<span class="n">table_cached</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CACHE TABLE square&quot;</span><span class="p">)</span> <span class="c1"># 데이터를 캐싱</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(1) FROM square&quot;</span><span class="p">)</span> <span class="c1"># Materialize the cache</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>seed number is 39
+2.4470584392547607
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(1) FROM square&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>0.02222752571105957
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="7.2.3-When-to-Cache-and-Persist">7.2.3 When to Cache and Persist<a class="anchor-link" href="#7.2.3-When-to-Cache-and-Persist">&#182;</a></h3><blockquote><p>대용량 테이블을 자주 쿼리하는 경우 혹은 변환에 활용되는 경우에 사용합니다</p>
+<ul>
+<li>기계학습 훈련 시와 같이 반복 적인 데이터프레임의 조회</li>
+<li>ETL 데이터 파이프라인의 변환작업에 빈번하게 사용되는 공통 테이블의 사용</li>
+</ul>
+</blockquote>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="7.2.4-When-Not-to-Cache-and-Persist">7.2.4 When Not to Cache and Persist<a class="anchor-link" href="#7.2.4-When-Not-to-Cache-and-Persist">&#182;</a></h3><blockquote><p>너무 크거나, 자주 사용되지 않는 테이블의 경우는 지양합니다. 왜냐하면 데이터의 직렬화, 역직렬화에 따른 비용이 상당하기 때문에 오히려 전체적인 처리시간에 악영향을 줄 수 있습니다.</p>
+<ul>
+<li>메모리에 들어가지 않을 만큼 큰 데이터</li>
+<li>크기에 비해서 자주 사용되지 않는 데이터</li>
+</ul>
+</blockquote>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-scala"><pre><span></span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.3-A-Family-of-Spark-Joins">7.3 A Family of Spark Joins<a class="anchor-link" href="#7.3-A-Family-of-Spark-Joins">&#182;</a></h2><div class="highlight"><pre><span></span>/**
+   * Select the proper physical plan for join based on join strategy hints, the availability of
+   * equi-join keys and the sizes of joining relations. Below are the existing join strategies,
+   * their characteristics and their limitations.
+   *
+   * - Broadcast hash join (BHJ):
+   *     Only supported for equi-joins, while the join keys do not need to be sortable.
+   *     Supported for all join types except full outer joins.
+   *     BHJ usually performs faster than the other join algorithms when the broadcast side is
+   *     small. However, broadcasting tables is a network-intensive operation and it could cause
+   *     OOM or perform badly in some cases, especially when the build/broadcast side is big.
+   *
+   * - Shuffle hash join:
+   *     Only supported for equi-joins, while the join keys do not need to be sortable.
+   *     Supported for all join types.
+   *     Building hash map from table is a memory-intensive operation and it could cause OOM
+   *     when the build side is big.
+   *
+   * - Shuffle sort merge join (SMJ):
+   *     Only supported for equi-joins and the join keys have to be sortable.
+   *     Supported for all join types.
+   *
+   * - Broadcast nested loop join (BNLJ):
+   *     Supports both equi-joins and non-equi-joins.
+   *     Supports all the join types, but the implementation is optimized for:
+   *       1) broadcasting the left side in a right outer join;
+   *       2) broadcasting the right side in a left outer, left semi, left anti or existence join;
+   *       3) broadcasting either side in an inner-like join.
+   *     For other cases, we need to scan the data multiple times, which can be rather slow.
+   *
+   * - Shuffle-and-replicate nested loop join (a.k.a. cartesian product join):
+   *     Supports both equi-joins and non-equi-joins.
+   *     Supports only inner like joins.
+   */
+</pre></div>
+<h3 id="7.3.1-Broadcast-Hash-Join">7.3.1 Broadcast Hash Join<a class="anchor-link" href="#7.3.1-Broadcast-Hash-Join">&#182;</a></h3><blockquote><p>드라이버 혹은 익스큐터의 메모리 보다 충분히 작은 경우에 해당 데이터를 broadcast 변수에 담아, 상대적으로 큰 데이터가 존재하는 노드로 변수를 전달하기 때문에 map 단계에서 join 이 일어나게 되어 <em>map-side-join</em> 이라고 부르며, 조인 성능에 가장 큰 영향을 미치는 셔플이 발생하지 않게 되어 성능이 좋습니다.</p>
+</blockquote>
+<h4 id="When-to-use-a-broadcast-hash-join">When to use a broadcast hash join<a class="anchor-link" href="#When-to-use-a-broadcast-hash-join">&#182;</a></h4><ul>
+<li>작고 큰 데이터 집합의 개별 키가 스파크에 의해서 같은 파티션에 해시되어 있는 경우<ul>
+<li>버킷 등을 통해 이미 동일한 노드에 저장되어 있는 경우로 추측</li>
+<li>hash-join 과 같이 hash table 을 사용하는 것처럼 보이지는 않으나 확인이 필요함</li>
+</ul>
+</li>
+<li>하나의 데이터 집합이 다른 데이터 집합에 비해 훨씬 작을 때 (그리고 기본 구성 메모리가 충분한 경우 10MB 이상)</li>
+<li>정렬되지 않은 키들의 매칭을 기반으로 두 데이터집합 들을 결합하기 위해서, 동등 조인을 수행하기를 워한는 경우<ul>
+<li>해시 조인이기 때문에 정렬되지 않은 상태의 Equi-join 이 가능하기 때문</li>
+<li><a href="https://www.essentialsql.com/non-equi-join-sql-purpose/">non equi-join</a> 은 anti-join 혹은 range-join 이 있다</li>
+</ul>
+</li>
+<li>모든 스파크 익스큐터들에 작은 데이터가 브로드캐스트 될 것이 명확해서, 네트워크 밴드나 OOM 오류를 걱정할 필요가 없을때</li>
+</ul>
+<h4 id="spark.sql.autoBroadcastJoinThreshold-&#44050;&#51004;&#47196;-&#49444;&#51221;&#51012;-&#48320;&#44221;&#54624;-&#49688;-&#51080;&#51004;&#47728;,-&#44592;&#48376;-&#44050;&#51008;-10m-&#51077;&#45768;&#45796;">spark.sql.autoBroadcastJoinThreshold &#44050;&#51004;&#47196; &#49444;&#51221;&#51012; &#48320;&#44221;&#54624; &#49688; &#51080;&#51004;&#47728;, &#44592;&#48376; &#44050;&#51008; 10m &#51077;&#45768;&#45796;<a class="anchor-link" href="#spark.sql.autoBroadcastJoinThreshold-&#44050;&#51004;&#47196;-&#49444;&#51221;&#51012;-&#48320;&#44221;&#54624;-&#49688;-&#51080;&#51004;&#47728;,-&#44592;&#48376;-&#44050;&#51008;-10m-&#51077;&#45768;&#45796;">&#182;</a></h4><p><img src="images/figure.7-6.png" alt="figure.7-6"></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">animal</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="s2">&quot;Cat&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Dog&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Monkey&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Lion&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Tiger&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">])</span>
+<span class="n">animal</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">category</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="s2">&quot;Fat&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Animal&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Beast&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">])</span>
+<span class="n">animal</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">animal</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;left_outer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+------+----+
+|name  |type|
++------+----+
+|Cat   |1   |
+|Dog   |1   |
+|Monkey|2   |
+|Lion  |3   |
+|Tiger |3   |
++------+----+
+
++------+--------+
+|  name|category|
++------+--------+
+|   Cat|     Fat|
+|   Dog|     Fat|
+|  Lion|   Beast|
+| Tiger|   Beast|
+|Monkey|  Animal|
++------+--------+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">animal</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">broadcast</span><span class="p">(</span><span class="n">category</span><span class="p">),</span> <span class="n">animal</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;left_outer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+------+--------+
+|  name|category|
++------+--------+
+|   Cat|     Fat|
+|   Dog|     Fat|
+|Monkey|  Animal|
+|  Lion|   Beast|
+| Tiger|   Beast|
++------+--------+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>스파크 3.0 에서 추가된 기능으로 explain 모드를 입력할 수 있으며 simple, extended, codegen, cost, formatted 등의 옵션을 제공합니다</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">animal</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">animal</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;left_outer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+<span class="n">animal</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">broadcast</span><span class="p">(</span><span class="n">category</span><span class="p">),</span> <span class="n">animal</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">category</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;left_outer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;formatted&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>== Physical Plan ==
+SortMergeJoin [type#282L], [id#295L], LeftOuter
+:- *(2) Sort [type#282L ASC NULLS FIRST], false, 0
+:  +- Exchange hashpartitioning(type#282L, 200), true, [id=#277]
+:     +- *(1) Scan ExistingRDD[name#281,type#282L]
++- *(4) Sort [id#295L ASC NULLS FIRST], false, 0
+   +- Exchange hashpartitioning(id#295L, 200), true, [id=#282]
+      +- *(3) Filter isnotnull(id#295L)
+         +- *(3) Scan ExistingRDD[category#294,id#295L]
+
+
+== Physical Plan ==
+* BroadcastHashJoin LeftOuter BuildRight (5)
+:- * Scan ExistingRDD (1)
++- BroadcastExchange (4)
+   +- * Filter (3)
+      +- * Scan ExistingRDD (2)
+
+
+(1) Scan ExistingRDD [codegen id : 2]
+Output [2]: [name#281, type#282L]
+Arguments: [name#281, type#282L], MapPartitionsRDD[65] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(2) Scan ExistingRDD [codegen id : 1]
+Output [2]: [category#294, id#295L]
+Arguments: [category#294, id#295L], MapPartitionsRDD[72] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(3) Filter [codegen id : 1]
+Input [2]: [category#294, id#295L]
+Condition : isnotnull(id#295L)
+
+(4) BroadcastExchange
+Input [2]: [category#294, id#295L]
+Arguments: HashedRelationBroadcastMode(List(input[1, bigint, false])), [id=#305]
+
+(5) BroadcastHashJoin [codegen id : 2]
+Left keys [1]: [type#282L]
+Right keys [1]: [id#295L]
+Join condition: None
+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<table>
+<thead><tr>
+<th>소트머지조인</th>
+<th>브로드캐스트 조인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="images/join_shuffle.png" alt="join_shuffle"></td>
+<td><img src="images/join_broadcast.png" alt="join_broadcast"></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="7.3.2-Shuffle-Sort-Merge-Join">7.3.2 Shuffle Sort Merge Join<a class="anchor-link" href="#7.3.2-Shuffle-Sort-Merge-Join">&#182;</a></h3><blockquote><p>두개의 대용량 데이터 집합을 조인하는 가장 효과적인 알고리즘이며, 기본 설정은 spark.sql.join.preferSortMergeJoin 은 enabled 된 상태입니다.</p>
+</blockquote>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreashold&quot;</span><span class="p">,</span> <span class="s2">&quot;10485760b&quot;</span><span class="p">)</span> <span class="c1"># default value</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreashold&quot;</span><span class="p">,</span> <span class="s2">&quot;-1&quot;</span><span class="p">)</span> <span class="c1"># force sortMergeJoin</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">states</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;AZ&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;TX&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;MI&quot;</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">])</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;SKU-0&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;SKU-1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;SKU-2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;SKU-3&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;SKU-4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;SKU-5&quot;</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">])</span>
+<span class="n">animal</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">items</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+------+----+
+|  name|type|
++------+----+
+|   Cat|   1|
+|   Dog|   1|
+|Monkey|   2|
+|  Lion|   3|
+| Tiger|   3|
++------+----+
+
++---+-----+
+| id| item|
++---+-----+
+|  0|SKU-0|
+|  1|SKU-1|
+|  2|SKU-2|
+|  3|SKU-3|
+|  4|SKU-4|
+|  5|SKU-5|
++---+-----+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.sql.autoBroadcastJoinThreashold&quot;</span><span class="p">,</span> <span class="s2">&quot;-1&quot;</span><span class="p">)</span> <span class="c1"># force sortMergeJoin</span>
+
+<span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&quot;AZ&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;TX&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;NY&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s2">&quot;MI&quot;</span><span class="p">}</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&quot;SKU-0&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s2">&quot;SKU-1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s2">&quot;SKU-2&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;SKU-3&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;SKU-4&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s2">&quot;SKU-5&quot;</span><span class="p">}</span>
+
+<span class="n">usersDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="nb">id</span><span class="p">:</span> <span class="p">(</span><span class="nb">id</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;user_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;user_</span><span class="si">{}</span><span class="s2">@databricks.com&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">states</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]))</span><span class="o">.</span><span class="n">toDF</span><span class="p">([</span><span class="s2">&quot;uid&quot;</span><span class="p">,</span> <span class="s2">&quot;login&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;user_state&quot;</span><span class="p">])</span>
+<span class="n">ordersDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">states</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span> <span class="n">items</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)]))</span><span class="o">.</span><span class="n">toDF</span><span class="p">([</span><span class="s2">&quot;transaction_id&quot;</span><span class="p">,</span> <span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="s2">&quot;users_id&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">])</span>
+
+<span class="c1"># usersDF.show(truncate=False)</span>
+<span class="c1"># ordersDF.show(truncate=False)</span>
+
+<span class="n">usersOrdersDF</span> <span class="o">=</span> <span class="n">ordersDF</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">usersDF</span><span class="p">,</span> <span class="n">ordersDF</span><span class="o">.</span><span class="n">users_id</span> <span class="o">==</span> <span class="n">usersDF</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+<span class="n">usersOrdersDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------------+--------+--------+-------+-----+-----+----+---------+------------------------+----------+
+|transaction_id|quantity|users_id|amount |state|items|uid |login    |email                   |user_state|
++--------------+--------+--------+-------+-----+-----+----+---------+------------------------+----------+
+|8590          |8590    |964     |17180.0|AZ   |SKU-5|964 |user_964 |user_964@databricks.com |TX        |
+|4464          |4464    |1677    |8928.0 |NY   |SKU-2|1677|user_1677|user_1677@databricks.com|CO        |
+|9042          |9042    |1677    |18084.0|CO   |SKU-1|1677|user_1677|user_1677@databricks.com|CO        |
+|5549          |5549    |1697    |11098.0|MI   |SKU-5|1697|user_1697|user_1697@databricks.com|CO        |
+|7950          |7950    |1806    |15900.0|MI   |SKU-3|1806|user_1806|user_1806@databricks.com|MI        |
+|2924          |2924    |2040    |5848.0 |CA   |SKU-1|2040|user_2040|user_2040@databricks.com|TX        |
+|8071          |8071    |2040    |16142.0|CA   |SKU-3|2040|user_2040|user_2040@databricks.com|TX        |
+|4897          |4897    |2250    |9794.0 |TX   |SKU-3|2250|user_2250|user_2250@databricks.com|NY        |
+|429           |429     |2453    |858.0  |CO   |SKU-5|2453|user_2453|user_2453@databricks.com|CA        |
+|8226          |8226    |2453    |16452.0|TX   |SKU-1|2453|user_2453|user_2453@databricks.com|CA        |
+|64            |64      |2529    |128.0  |TX   |SKU-0|2529|user_2529|user_2529@databricks.com|TX        |
+|3499          |3499    |2529    |6998.0 |TX   |SKU-3|2529|user_2529|user_2529@databricks.com|TX        |
+|6458          |6458    |2529    |12916.0|CO   |SKU-2|2529|user_2529|user_2529@databricks.com|TX        |
+|1617          |1617    |2927    |3234.0 |TX   |SKU-5|2927|user_2927|user_2927@databricks.com|CA        |
+|6750          |6750    |2927    |13500.0|TX   |SKU-2|2927|user_2927|user_2927@databricks.com|CA        |
+|4110          |4110    |5385    |8220.0 |CA   |SKU-5|5385|user_5385|user_5385@databricks.com|CA        |
+|7004          |7004    |5385    |14008.0|CO   |SKU-1|5385|user_5385|user_5385@databricks.com|CA        |
+|2376          |2376    |5409    |4752.0 |NY   |SKU-5|5409|user_5409|user_5409@databricks.com|CO        |
+|3346          |3346    |5556    |6692.0 |NY   |SKU-3|5556|user_5556|user_5556@databricks.com|NY        |
+|4109          |4109    |5556    |8218.0 |CO   |SKU-1|5556|user_5556|user_5556@databricks.com|NY        |
++--------------+--------+--------+-------+-----+-----+----+---------+------------------------+----------+
+only showing top 20 rows
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">usersOrdersDF</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;formatted&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>== Physical Plan ==
+* SortMergeJoin Inner (9)
+:- * Sort (4)
+:  +- Exchange (3)
+:     +- * Filter (2)
+:        +- * Scan ExistingRDD (1)
++- * Sort (8)
+   +- Exchange (7)
+      +- * Filter (6)
+         +- * Scan ExistingRDD (5)
+
+
+(1) Scan ExistingRDD [codegen id : 1]
+Output [6]: [transaction_id#406L, quantity#407L, users_id#408L, amount#409, state#410, items#411]
+Arguments: [transaction_id#406L, quantity#407L, users_id#408L, amount#409, state#410, items#411], MapPartitionsRDD[123] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(2) Filter [codegen id : 1]
+Input [6]: [transaction_id#406L, quantity#407L, users_id#408L, amount#409, state#410, items#411]
+Condition : isnotnull(users_id#408L)
+
+(3) Exchange
+Input [6]: [transaction_id#406L, quantity#407L, users_id#408L, amount#409, state#410, items#411]
+Arguments: hashpartitioning(users_id#408L, 200), true, [id=#417]
+
+(4) Sort [codegen id : 2]
+Input [6]: [transaction_id#406L, quantity#407L, users_id#408L, amount#409, state#410, items#411]
+Arguments: [users_id#408L ASC NULLS FIRST], false, 0
+
+(5) Scan ExistingRDD [codegen id : 3]
+Output [4]: [uid#396L, login#397, email#398, user_state#399]
+Arguments: [uid#396L, login#397, email#398, user_state#399], MapPartitionsRDD[112] at applySchemaToPythonRDD at NativeMethodAccessorImpl.java:0, ExistingRDD, UnknownPartitioning(0)
+
+(6) Filter [codegen id : 3]
+Input [4]: [uid#396L, login#397, email#398, user_state#399]
+Condition : isnotnull(uid#396L)
+
+(7) Exchange
+Input [4]: [uid#396L, login#397, email#398, user_state#399]
+Arguments: hashpartitioning(uid#396L, 200), true, [id=#423]
+
+(8) Sort [codegen id : 4]
+Input [4]: [uid#396L, login#397, email#398, user_state#399]
+Arguments: [uid#396L ASC NULLS FIRST], false, 0
+
+(9) SortMergeJoin [codegen id : 5]
+Left keys [1]: [users_id#408L]
+Right keys [1]: [uid#396L]
+Join condition: None
+
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Optimizing-the-shuffle-sort-merge-join">Optimizing the shuffle sort merge join<a class="anchor-link" href="#Optimizing-the-shuffle-sort-merge-join">&#182;</a></h4><blockquote><p>Sort-Merge 조인의 가장 큰 비용인 Exchange Stage 를 제거하여 성능향상을 도모할 수 있습니다. 이는 버킷을 통해 해당 데이터를 생성하는 시점에 미리 정렬해 두는 접근입니다. 즉 자주 사용되는 equi-join 의 컬럼을 기준으로 버킷 수준에서 정렬해둔다고 보시면 됩니다.</p>
+</blockquote>
+<p><img src="images/join_exchange.png" alt="join_exchange">
+<img src="images/join_bucket.png" alt="join_bucket"></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># spark.conf.set(&quot;spark.sql.legacy.allowCreatingManagedTableUsingNonemptyLocation&quot;,&quot;true&quot;)</span>
+<span class="o">%</span><span class="k">rm</span> -rf &quot;spark-warehouse/userstbl&quot;
+<span class="o">%</span><span class="k">rm</span> -rf &quot;spark-warehouse/orderstbl&quot;
+
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="p">(</span>
+    <span class="n">usersDF</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">asc</span><span class="p">(</span><span class="s2">&quot;uid&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">write</span>
+    <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bucketBy</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;uid&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">saveAsTable</span><span class="p">(</span><span class="s2">&quot;UsersTbl&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="p">(</span>
+    <span class="n">ordersDF</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">asc</span><span class="p">(</span><span class="s2">&quot;users_id&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">write</span>
+    <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;parquet&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bucketBy</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;users_id&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">saveAsTable</span><span class="p">(</span><span class="s2">&quot;OrdersTbl&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;cache table UsersTbl&quot;</span><span class="p">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;cache table OrdersTbl&quot;</span><span class="p">)</span>
+
+<span class="n">usersBucketDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;UsersTbl&quot;</span><span class="p">)</span>
+<span class="n">ordersBucketDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;OrdersTbl&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">joinUsersOrdersBucketDF</span> <span class="o">=</span> <span class="n">ordersBucketDF</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">usersBucketDF</span><span class="p">,</span> <span class="n">ordersBucketDF</span><span class="o">.</span><span class="n">users_id</span> <span class="o">==</span> <span class="n">usersBucketDF</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+<span class="n">joinUsersOrdersBucketDF</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>+--------------+--------+--------+-------+-----+-----+---+--------+-----------------------+----------+
+|transaction_id|quantity|users_id|amount |state|items|uid|login   |email                  |user_state|
++--------------+--------+--------+-------+-----+-----+---+--------+-----------------------+----------+
+|4959          |4959    |2       |9918.0 |AZ   |SKU-4|2  |user_2  |user_2@databricks.com  |CA        |
+|1458          |1458    |2       |2916.0 |NY   |SKU-3|2  |user_2  |user_2@databricks.com  |CA        |
+|3986          |3986    |12      |7972.0 |CA   |SKU-5|12 |user_12 |user_12@databricks.com |AZ        |
+|9767          |9767    |28      |19534.0|CA   |SKU-1|28 |user_28 |user_28@databricks.com |TX        |
+|4833          |4833    |29      |9666.0 |MI   |SKU-1|29 |user_29 |user_29@databricks.com |CO        |
+|4368          |4368    |30      |8736.0 |CO   |SKU-2|30 |user_30 |user_30@databricks.com |NY        |
+|8507          |8507    |42      |17014.0|CO   |SKU-1|42 |user_42 |user_42@databricks.com |AZ        |
+|1132          |1132    |42      |2264.0 |AZ   |SKU-5|42 |user_42 |user_42@databricks.com |AZ        |
+|6506          |6506    |48      |13012.0|MI   |SKU-3|48 |user_48 |user_48@databricks.com |MI        |
+|5795          |5795    |48      |11590.0|TX   |SKU-1|48 |user_48 |user_48@databricks.com |MI        |
+|5228          |5228    |48      |10456.0|AZ   |SKU-5|48 |user_48 |user_48@databricks.com |MI        |
+|3683          |3683    |88      |7366.0 |CO   |SKU-1|88 |user_88 |user_88@databricks.com |CO        |
+|6931          |6931    |151     |13862.0|MI   |SKU-1|151|user_151|user_151@databricks.com|CO        |
+|1501          |1501    |151     |3002.0 |CO   |SKU-3|151|user_151|user_151@databricks.com|CO        |
+|5659          |5659    |156     |11318.0|CO   |SKU-5|156|user_156|user_156@databricks.com|AZ        |
+|9322          |9322    |171     |18644.0|AZ   |SKU-1|171|user_171|user_171@databricks.com|CO        |
+|4620          |4620    |171     |9240.0 |MI   |SKU-1|171|user_171|user_171@databricks.com|CO        |
+|9308          |9308    |201     |18616.0|AZ   |SKU-1|201|user_201|user_201@databricks.com|NY        |
+|2870          |2870    |208     |5740.0 |NY   |SKU-1|208|user_208|user_208@databricks.com|CA        |
+|9175          |9175    |210     |18350.0|MI   |SKU-4|210|user_210|user_210@databricks.com|TX        |
++--------------+--------+--------+-------+-----+-----+---+--------+-----------------------+----------+
+only showing top 20 rows
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="When-to-use-a-shuffle-sort-merge-join">When to use a shuffle sort merge join<a class="anchor-link" href="#When-to-use-a-shuffle-sort-merge-join">&#182;</a></h4><ul>
+<li>두 개의 큰 데이터 집합의 각 키를 정렬하고 동일한 파티션으로 해시 할 수 있는 경우</li>
+<li>정렬된 키들의 매칭을 기반으로 두 데이터집합 들을 결합하기 위해서, 동등 조인을 수행하기를 워한는 경우<ul>
+<li>SortMerge 조인이기 때문에 이미 정렬된 상태의 Equi-join 이 가능하기 때문</li>
+</ul>
+</li>
+<li>네트워크를 통해 대용량 셔플 파일을 저장 시에 Exchange 와 Sort 연산을 피하고 싶을 때<ul>
+<li>Bucket 기법을 활용하는 예제를 고려하라는 말로 추측</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.4-Inspecting-the-Spark-UI">7.4 Inspecting the Spark UI<a class="anchor-link" href="#7.4-Inspecting-the-Spark-UI">&#182;</a></h2><h3 id="7.4.1-Journey-Through-the-Spark-UI-Tabs">7.4.1 Journey Through the Spark UI Tabs<a class="anchor-link" href="#7.4.1-Journey-Through-the-Spark-UI-Tabs">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Jobs-and-Stages">Jobs and Stages<a class="anchor-link" href="#Jobs-and-Stages">&#182;</a></h4><blockquote><p>Duration 항목을 기준으로 문제가 되는 Job, Stage 및 Task 를 추측합니다</p>
+</blockquote>
+<ul>
+<li>확인 및 모니터링 대상 지표<ul>
+<li>Average Duration 시간</li>
+<li>GC 에 소모되는 시간</li>
+<li>Shuffle bytes/records 정보</li>
+</ul>
+</li>
+</ul>
+<p><img src="images/ch7-ui-1.png" alt="ch7-ui-1">
+<img src="images/ch7-ui-2.png" alt="ch7-ui-2"></p>
+<p><img src="images/ch7-ui-3.png" alt="ch7-ui-3">
+<img src="images/ch7-ui-4.png" alt="ch7-ui-4">
+<img src="images/ch7-ui-5.png" alt="ch7-ui-5">
+<img src="images/ch7-ui-6.png" alt="ch7-ui-6">
+<img src="images/ch7-ui-7.png" alt="ch7-ui-7">
+<img src="images/ch7-ui-8.png" alt="ch7-ui-8"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.5-Summary">7.5 Summary<a class="anchor-link" href="#7.5-Summary">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="&#52628;&#44032;&#47196;-&#54617;&#49845;&#54624;-&#45236;&#50857;&#46308;">&#52628;&#44032;&#47196; &#54617;&#49845;&#54624; &#45236;&#50857;&#46308;<a class="anchor-link" href="#&#52628;&#44032;&#47196;-&#54617;&#49845;&#54624;-&#45236;&#50857;&#46308;">&#182;</a></h2><ul>
+<li><a href="https://www.youtube.com/watch?v=5dga0UT4RI8">Tuning Apache Spark for Large Scale Workloads - Sital Kedia &amp; Gaoxiang Liu</a></li>
+<li><a href="https://www.youtube.com/watch?v=6BD-Vv-ViBw">Hive Bucketing in Apache Spark - Tejas Patil</a></li>
+<li><a href="https://towardsdatascience.com/how-does-facebook-tune-apache-spark-for-large-scale-workloads-3238ddda0830">How does Facebook tune Apache Spark for Large-Scale Workloads?</a></li>
+<li><a href="https://www.waitingforcode.com/apache-spark/external-shuffle-service-apache-spark/read">External Shuffle Service in Apache Spark</a></li>
+<li><a href="https://medium.com/@leeyh0216/spark-internal-part-2-spark%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B4%80%EB%A6%AC-2-db1975b74d2f">Spark Internal Part 2. Spark의 메모리 관리(2)</a></li>
+<li><a href="https://databricks.com/session/why-you-should-care-about-data-layout-in-the-filesystem">Why You Should Care about Data Layout in the Filesystem</a></li>
+<li><a href="https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/SparkStrategies.scala#L111">Five distinct join strategies</a></li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
      </div>
